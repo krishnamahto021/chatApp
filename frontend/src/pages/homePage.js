@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SignUp from "./signUp";
-import { Link } from "react-router-dom";
 import SignIn from "./signIn";
 
 const HomePage = () => {
