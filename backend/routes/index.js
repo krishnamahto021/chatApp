@@ -4,6 +4,9 @@ const userController = require("../controllers/userController");
 const passport = require("passport");
 
 router.post("/sign-up", userController.signUp);
-router.get("/sign-in", passport.authenticate("local"), userController.signIn);
+router.get(
+  "/sign-in",
+  userController.signIn
+);
 
 module.exports = router;

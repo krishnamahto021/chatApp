@@ -2,10 +2,10 @@ const express = require("express");
 const dotEnv = require("dotenv");
 const { chats } = require("./data");
 const connectDB = require("./config/db");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const passport = require("passport");
-const passportLocal = require("./config/passport-local-strategy");
+// const passportLocal = require("./config/passport-local-strategy");
+const passportJWT = require('./config/passport-jwt-strategy');
+
 
 const app = express();
 dotEnv.config();
@@ -15,21 +15,11 @@ connectDB();
 app.use(express.json());
 
 app.use(express.urlencoded());
-app.use(cookieParser());
 
-app.use(
-  session({
-    name: "chatApp",
-    secret: process.env.SESSION_COOKIE_SECRET,
-    resave: false,
-    cookie: {
-      maxAge: 1000 * 60 * 100,
-    },
-  })
-);
+
+
 
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.get("/", (req, res) => {
   return res.send(chats);
