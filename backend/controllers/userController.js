@@ -5,16 +5,21 @@ dotEnv.config();
 
 module.exports.signUp = async function (req, res) {
   try {
-    const { name, email, password, pic } = req.body;
+    const { name, email, password, profilePic } = req.body;
 
     const user = await User.findOne({ email });
-    console.log(user);
     if (user) {
       console.log("user already exists");
-      return res.redirect("back");
+      res.status(400);
     } else {
-      const newUser = await User.create({ name, email, password, pic });
+      const newUser = await User.create({ name, email, password, profilePic });
       console.log(newUser);
+      res.status(201).json({
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        profilePic: newUser.profilePic,
+      });
     }
   } catch (err) {
     console.log(`errror in creating user ${err}`);
