@@ -33,11 +33,16 @@ module.exports.signUp = async function (req, res) {
 
 module.exports.signIn = async function (req, res) {
   try {
-    let user = await User.findOne({ email: req.body.email });
+    const { email, password } = req.body;
+ 
+    let user = await User.findOne({ email });
+
     if (user) {
-      if (user.password === req.body.password) {
-        return res.json(422, {
-          message: "Sign In successfull",
+      if (user.password === password) {
+        // Sign In Success
+        console.log("sucess");
+        return res.status(200).json({
+          message: "Sign In successful",
           data: {
             token: jwt.sign(user.toJSON(), process.env.JWT_SECRET_KEY, {
               expiresIn: "30d",
@@ -45,19 +50,23 @@ module.exports.signIn = async function (req, res) {
           },
         });
       } else {
-        return res.json(422, {
+        // Invalid Password
+        console.log("wrong password");
+        return res.status(422).json({
           message: "Invalid Password",
         });
       }
     } else {
-      return res.json(422, {
+      // Invalid User
+      console.log("Wrong email");
+      return res.status(422).json({
         message: "Invalid User",
       });
     }
   } catch (err) {
-    console.log(`errror in signing up the user from the JWT ${err}`);
-    return res.json(500, {
-      message: "Internal Server Errror!!",
+    console.log(`error in signing up the user from the JWT ${err}`);
+    return res.status(500).json({
+      message: "Internal Server Error!!",
     });
   }
 };
