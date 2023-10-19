@@ -75,10 +75,13 @@ const SignUp = () => {
         config
       );
       console.log(data);
-      // if (data.status === 201) {
-      clearInput();
-      toast.success("Created Account successflyy!!");
-      // }
+      if (data.status === 201) {
+        clearInput();
+        toast.success("Created Account successflyy!!");
+      } else if (data.status === 200) {
+        toast.error("Account Already Exists!");
+        clearInput();
+      }
     } catch (err) {
       console.log(`error in the submitting form ! ${err}`);
       toast.error("Internal Server Error!");

@@ -10,7 +10,12 @@ module.exports.signUp = async function (req, res) {
     const user = await User.findOne({ email });
     if (user) {
       console.log("user already exists");
-      res.status(400);
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profilePic: user.profilePic,
+      });
     } else {
       const newUser = await User.create({ name, email, password, profilePic });
       console.log(newUser);
