@@ -63,7 +63,6 @@ const SignUp = () => {
           "Content-type": "application/json",
         },
       };
-      console.log("helo");
       const data = await axios.post(
         "/user/sign-up",
         {
@@ -74,7 +73,6 @@ const SignUp = () => {
         },
         config
       );
-      console.log(data);
       if (data.status === 201) {
         clearInput();
         toast.success("Created Account successflyy!!");

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassowrd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -21,7 +22,15 @@ const SignIn = () => {
         { email, password },
         config
       );
-      toast.success("Signed in Successfull");
+      console.log(data.status);
+      if (data.status === 200) {
+        toast.success("Signed In successfull!! ");
+        navigate("/chat");
+      } else if (data.status === 201) {
+        toast.error("Password invalid!!");
+      } else {
+        toast.error("Email not registered!");
+      }
     } catch (err) {
       toast.error(`Internal server Error!!`);
       console.log("errror in signing up the user", err);

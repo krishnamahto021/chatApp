@@ -11,7 +11,6 @@ let opts = {
 
 passport.use(
   new JWTStrategy(opts, async function (jwtPayload, done) {
-    console.log("hi");
     try {
       const user = User.findOne({ email: req.body.email });
       if (user) {

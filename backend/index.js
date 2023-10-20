@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
   return res.send(chats);
 });
 
-// app.use('/user/sign-up',require('./routes'));
+
 app.use("/user", require("./routes"));
 
 const PORT = process.env.PORT || 5000;

@@ -34,7 +34,7 @@ module.exports.signUp = async function (req, res) {
 module.exports.signIn = async function (req, res) {
   try {
     const { email, password } = req.body;
- 
+
     let user = await User.findOne({ email });
 
     if (user) {
@@ -52,14 +52,14 @@ module.exports.signIn = async function (req, res) {
       } else {
         // Invalid Password
         console.log("wrong password");
-        return res.status(422).json({
+        return res.status(201).json({
           message: "Invalid Password",
         });
       }
     } else {
       // Invalid User
       console.log("Wrong email");
-      return res.status(422).json({
+      return res.status(202).json({
         message: "Invalid User",
       });
     }
