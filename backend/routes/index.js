@@ -13,5 +13,6 @@ router.get(
     userController.chatApi
   )
 );
+router.get('/log-out/:token',userController.logOut);
 
 module.exports = router;

@@ -74,3 +74,16 @@ module.exports.signIn = async function (req, res) {
 module.exports.chatApi = async function (req, res) {
   console.log("hi inside chat api");
 };
+
+const tokenBlacklist = new Set(); // Initialize a Set to store blacklisted tokens
+
+module.exports.logOut = function (req, res) {
+  const token = req.params.token;
+  if (token) {
+    // Add the token to the blacklist
+    tokenBlacklist.add(token);
+    res.status(200).json({ message: "Logged out successfully" });
+  } else {
+    res.status(400).json({ message: "Token not provided" });
+  }
+};

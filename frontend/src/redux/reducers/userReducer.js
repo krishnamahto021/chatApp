@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: "",
+  initialState: localStorage.getItem("userToken"),
   reducers: {
     authorizeUser: (state, action) => {
       const token = localStorage.getItem("userToken");
-      console.log(token);
       state = token;
+      return state;
+    },
+    logOutUser: (state, action) => {
+      localStorage.removeItem("userToken");
+      state = "";
+      toast.success("Logged out Successfully!");
       return state;
     },
   },
@@ -15,5 +21,5 @@ const userSlice = createSlice({
 });
 
 export const userReducer = userSlice.reducer;
-export const { authorizeUser } = userSlice.actions;
+export const { authorizeUser, logOutUser } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;

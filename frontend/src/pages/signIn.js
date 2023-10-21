@@ -21,9 +21,10 @@ const SignIn = () => {
         { email, password },
         config
       );
-      localStorage.setItem("userToken", data.data.data.token);
+
       if (data.status === 200) {
         toast.success("Signed In successfull!! ");
+        localStorage.setItem("userToken", data.data.data.token);
         navigate("/user/chat");
       } else if (data.status === 201) {
         toast.error("Password invalid!!");
