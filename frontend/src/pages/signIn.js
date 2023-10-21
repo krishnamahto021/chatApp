@@ -8,7 +8,6 @@ const SignIn = () => {
   const [password, setPassowrd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -22,10 +21,10 @@ const SignIn = () => {
         { email, password },
         config
       );
-      console.log(data.status);
+      localStorage.setItem("userToken", data.data.data.token);
       if (data.status === 200) {
         toast.success("Signed In successfull!! ");
-        navigate("/chat");
+        navigate("/user/chat");
       } else if (data.status === 201) {
         toast.error("Password invalid!!");
       } else {

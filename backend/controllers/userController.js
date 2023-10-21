@@ -18,7 +18,7 @@ module.exports.signUp = async function (req, res) {
       });
     } else {
       const newUser = await User.create({ name, email, password, profilePic });
-      console.log(newUser);
+      // console.log(newUser);
       res.status(201).json({
         _id: newUser._id,
         name: newUser.name,
@@ -69,4 +69,8 @@ module.exports.signIn = async function (req, res) {
       message: "Internal Server Error!!",
     });
   }
+};
+
+module.exports.chatApi = async function (req, res) {
+  console.log("hi inside chat api");
 };

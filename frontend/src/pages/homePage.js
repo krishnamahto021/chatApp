@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignUp from "./signUp";
 import SignIn from "./signIn";
+import { useDispatch, useSelector } from "react-redux";
+import { authorizeUser, userSelector } from "../redux/reducers/userReducer";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [signUp, setSignUp] = useState("signUp");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const setSignUpFunction = (p) => {
     setSignUp(p);
   };
+
+  const token = useSelector(userSelector);
+
+  useEffect(() => {
+    dispatch(authorizeUser()); 
+  }, [dispatch, navigate, token]);
+
   return (
     <>
       <div className="container flex flex-col items-center justify-evenly mt-10 p-3">
