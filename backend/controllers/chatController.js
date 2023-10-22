@@ -60,9 +60,33 @@ module.exports.fetchChat = async function (req, res) {
       path: "latestMessage.sender",
       select: "name profileImage email",
     });
-    console.log(chats);
     res.send(chats);
   } catch (error) {
     console.log(`Error in fetching the chat ${error}`);
+  }
+};
+
+module.exports.createGroupChat = async function (req, res) {
+  var users = JSON.parse(req.body.users);
+  if (users.length < 2) {
+    return res.status(400).send("Need more than 2 memebers to create group");
+  }
+  users.push(req.user);
+  try {
+    const groupChat = await Chat.create({
+      chatName: req.body.name,
+      users,
+      isGroupChat: true,
+      groupAdmin: req.user,
+    });
+
+    const fullGroupChat = await Chat.findById(groupChat._id)
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    res.status(200).send(fullGroupChat);
+  } catch (error) {
+    console.log(`Error in creating group chat ${error}`);
+    return res.status(400).send(`Internal Server Error !`);
   }
 };

@@ -27,4 +27,13 @@ router.get(
   chatController.fetchChat
 );
 
+router.post(
+  "/create-group-chat",
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/",
+  }),
+  chatController.createGroupChat
+);
+
 module.exports = router;
