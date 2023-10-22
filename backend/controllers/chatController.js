@@ -90,3 +90,29 @@ module.exports.createGroupChat = async function (req, res) {
     return res.status(400).send(`Internal Server Error !`);
   }
 };
+
+module.exports.renameChatGroup = async function (req, res) {
+  try {
+    const { chatId, chatName } = req.body;
+    const prevChat = await Chat.findById(chatId);
+    const updatedChat = await Chat.findByIdAndUpdate(
+      chatId,
+      { chatName },
+      { new: true }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password"); // new true helps to get the updated value
+
+    console.log("updted", updatedChat);
+    console.log("prev", prevChat);
+
+    if (!updatedChat) {
+      return res.status(400).send("Chat not Updated!");
+    } else {
+      return res.status(200).send(updatedChat);
+    }
+  } catch (err) {
+    console.log("errror in updating the name of group chat ");
+    return res.status(400).send("Internal Server Error!");
+  }
+};

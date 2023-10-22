@@ -36,4 +36,10 @@ router.post(
   chatController.createGroupChat
 );
 
+router.post(
+  "/rename-group-chat",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  chatController.renameChatGroup
+);
+
 module.exports = router;
