@@ -1,12 +1,14 @@
-import { useDispatch } from "react-redux";
-import { logOutUser } from "../redux/reducers/userReducer";
+import UserContainer from "./userContainer";
+import UserMessage from "./userMessage";
 
 const ChatPage = () => {
-  const dispatch = useDispatch();
-
   return (
     <>
-      <button onClick={() => dispatch(logOutUser())}>Log Out</button>
+      {/* <button onClick={() => dispatch(logOutUser())}>Log Out</button> */}
+      <div className="chatPageContainer flex ">
+        <UserContainer />
+        <UserMessage />
+      </div>
     </>
   );
 };
