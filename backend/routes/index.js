@@ -7,12 +7,14 @@ router.post("/sign-up", userController.signUp);
 router.post("/sign-in", userController.signIn);
 router.get(
   "/chat",
-  passport.authenticate(
-    "jwt",
-    { session: false, failureRedirect: "/user/sign-in" },
-    userController.chatApi
-  )
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/",
+  }),
+  userController.chatApi
 );
-router.get('/log-out/:token',userController.logOut);
+
+router.get("/log-out/:token", userController.logOut);
+router.get("/search-user",userController.searchUser);
 
 module.exports = router;

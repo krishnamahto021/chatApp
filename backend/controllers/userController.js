@@ -71,8 +71,20 @@ module.exports.signIn = async function (req, res) {
   }
 };
 
-module.exports.chatApi = async function (req, res) {
-  console.log("hi inside chat api");
+module.exports.chatApi = async function (req, res) {};
+
+// /user/search-user/?search?=name
+module.exports.searchUser = async function (req, res) {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const users = await User.find(keyword);
+  res.send(users);
 };
 
 const tokenBlacklist = new Set(); // Initialize a Set to store blacklisted tokens
