@@ -42,4 +42,16 @@ router.post(
   chatController.renameChatGroup
 );
 
+router.post(
+  "/add-user-group-chat",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  chatController.addUser
+);
+
+router.post(
+  "/remove-user-group-chat",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  chatController.removeUser
+);
+
 module.exports = router;

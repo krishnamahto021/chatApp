@@ -94,7 +94,6 @@ module.exports.createGroupChat = async function (req, res) {
 module.exports.renameChatGroup = async function (req, res) {
   try {
     const { chatId, chatName } = req.body;
-    const prevChat = await Chat.findById(chatId);
     const updatedChat = await Chat.findByIdAndUpdate(
       chatId,
       { chatName },
@@ -102,9 +101,6 @@ module.exports.renameChatGroup = async function (req, res) {
     )
       .populate("users", "-password")
       .populate("groupAdmin", "-password"); // new true helps to get the updated value
-
-    console.log("updted", updatedChat);
-    console.log("prev", prevChat);
 
     if (!updatedChat) {
       return res.status(400).send("Chat not Updated!");
@@ -114,5 +110,53 @@ module.exports.renameChatGroup = async function (req, res) {
   } catch (err) {
     console.log("errror in updating the name of group chat ");
     return res.status(400).send("Internal Server Error!");
+  }
+};
+
+module.exports.addUser = async function (req, res) {
+  try {
+    const { chatId, userId } = req.body;
+
+    const updatedChat = await Chat.findByIdAndUpdate(
+      chatId,
+      { $push: { users: userId } },
+      { new: true }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    if (!updatedChat) {
+      console.log("Error in adding the users in the chat");
+      return res.send(400).send("Internal Server Error");
+    } else {
+      return res.status(200).send(updatedChat);
+    }
+  } catch (error) {
+    console.log(`Error in adding the users ${error}`);
+    return res.status(400).send("Internal SErver error!!");
+  }
+};
+
+module.exports.removeUser = async function (req, res) {
+  try {
+    const { chatId, userId } = req.body;
+
+    const updatedChat = await Chat.findByIdAndUpdate(
+      chatId,
+      { $pull: { users: userId } },
+      { new: true }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    if (!updatedChat) {
+      console.log("Error in adding the users in the chat");
+      return res.send(400).send("Internal Server Error");
+    } else {
+      return res.status(200).send(updatedChat);
+    }
+  } catch (error) {
+    console.log(`Error in adding the users ${error}`);
+    return res.status(400).send("Internal SErver error!!");
   }
 };
