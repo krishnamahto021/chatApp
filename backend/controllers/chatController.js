@@ -48,3 +48,21 @@ module.exports.oneToOneChat = async function (req, res) {
     });
   }
 };
+
+module.exports.fetchChat = async function (req, res) {
+  try {
+    var chats = await Chat.find({ users: { $elemMatch: { $eq: req.user } } })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 }); // to sort the latest chat first
+    chats = await User.populate(chats, {
+      path: "latestMessage.sender",
+      select: "name profileImage email",
+    });
+    console.log(chats);
+    res.send(chats);
+  } catch (error) {
+    console.log(`Error in fetching the chat ${error}`);
+  }
+};

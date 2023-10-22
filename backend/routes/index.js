@@ -18,4 +18,13 @@ router.post(
   chatController.oneToOneChat
 );
 
+router.get(
+  "/chat",
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/",
+  }),
+  chatController.fetchChat
+);
+
 module.exports = router;
