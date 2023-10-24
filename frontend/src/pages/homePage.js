@@ -26,7 +26,7 @@ const HomePage = () => {
         <span className="text-lg font-semibold">
           Connect, Communicate, and Flourish Together!
         </span>
-        <div className="switch flex m-4 border-purple-200 transition-colors">
+        <div className="switch flex m-4 border-purple-200 transition-all duration-700">
           <button
             className={`font-medium rounded-full p-3 ${
               signUp === "signUp" ? "bg-[#a457c9]" : "bg-white"

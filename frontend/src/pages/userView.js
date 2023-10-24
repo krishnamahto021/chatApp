@@ -1,18 +1,19 @@
 import React from "react";
 
-const UserView = () => {
+const UserView = (props) => {
+  const { searchedUser } = props;
   return (
     <>
-      <div className="container  flex  items-center border-b border-gray-400 hover:bg-gray-400  ">
+      <div className="container flex gap-2 m-1  border-b border-gray-400 hover:bg-gray-400 cursor-pointer ">
         <div className="imageContainer m-1 p-2">
           <img
-            src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-            alt="name"
+            src={searchedUser.profileImage}
+            alt={searchedUser.name}
             className="image w-14 h-w-14 rounded-full "
           ></img>
         </div>
-        <div className="textContainer flex flex-col ">
-          <p className="userName text-[18px] ">Krishna</p>
+        <div className="textContainer flex flex-col m-4 ">
+          <p className="userName text-[18px] ">{searchedUser.name}</p>
           <p>Message</p>
         </div>
       </div>

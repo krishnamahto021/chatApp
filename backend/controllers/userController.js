@@ -41,12 +41,18 @@ module.exports.signIn = async function (req, res) {
       if (user.password === password) {
         // Sign In Success
         console.log("sucess");
+        let userWithOutPassword = {
+          name: user.name,
+          email: user.email,
+          profileImage: user.profileImage,
+          token: jwt.sign(user.toJSON(), process.env.JWT_SECRET_KEY, {
+            expiresIn: "30d",
+          }),
+        };
         return res.status(200).json({
           message: "Sign In successful",
           data: {
-            token: jwt.sign(user.toJSON(), process.env.JWT_SECRET_KEY, {
-              expiresIn: "30d",
-            }),
+            user: userWithOutPassword,
           },
         });
       } else {
@@ -64,7 +70,7 @@ module.exports.signIn = async function (req, res) {
       });
     }
   } catch (err) {
-    console.log(`error in signing up the user from the JWT ${err}`);
+    console.log(`error in signing in the user from the JWT ${err}`);
     return res.status(500).json({
       message: "Internal Server Error!!",
     });
