@@ -6,10 +6,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const UserContainer = () => {
-  const { initialUser, chat } = useSelector(userSelector);
+  const { initialUser, chats } = useSelector(userSelector);
   const dispatch = useDispatch();
 
-  const fetchChats = async (userId) => {
+  const fetchChats = async () => {
     try {
       const config = {
         headers: {
@@ -17,37 +17,35 @@ const UserContainer = () => {
         },
       };
       const { data } = await axios.get("/user/chat", config);
-      dispatch(setChats([data]));
+      console.log(data);
+      dispatch(setChats(data));
     } catch (error) {
       toast.error(`Error in fetching Chats`);
       console.log(`Error in fetching chats ${error}`);
     }
   };
 
+  console.log(chats);
   useEffect(() => {
     fetchChats();
   }, []);
 
-  const getName = (c) => {
-    console.log(c);
-    if (c && !c.isGroupChat && c.users && c.users.length >= 2) {
-      return c.users[1];
-    }
-    // Handle the case where the chat or user data is missing
-    return null; // Or provide a default value or handle it as needed
+  const getName = (users) => {
+    const otherUser = users.find((obj) => obj._id !== initialUser.id);
+    return otherUser;
   };
 
   return (
     <>
-      <aside className=" bg-gray-300 rounded-md p-2 m-3 h-[85vh]">
-        <div className="usersContainer  w-[385px] pl-1  ">
-          {chat.length > 1 ? (
-            chat.map((c, index) => {
-              const user = getName(c[0]);
-              return <UserView key={index} searchedUser={user} />;
+      <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh]">
+        <div className="usersContainer w-[385px] pl-1">
+          {chats.length > 0 ? (
+            chats.map((c) => {
+              const user = getName(c.users);
+              return <UserView searchedUser={user} />;
             })
           ) : (
-            <p>No chats available</p>
+            <p>No Chats found</p>
           )}
         </div>
       </aside>

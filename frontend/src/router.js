@@ -6,13 +6,11 @@ import { userSelector } from "./redux/reducers/userReducer";
 
 export const ProtectedRouteChat = ({ element }) => {
   const { initialUser } = useSelector(userSelector);
-  console.log(initialUser);
   return initialUser.token ? element : <Navigate to="/" />;
 };
 
 export const ProtectedRoute = ({ element }) => {
   const { initialUser } = useSelector(userSelector);
-  console.log(initialUser);
   return initialUser.token ? <Navigate to="/user/chat" /> : element;
 };
 

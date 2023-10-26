@@ -22,14 +22,11 @@ const UserView = (props) => {
       };
       const { data } = await axios.post("/user/chat", { userId }, config);
       dispatch(setSelectedChat(data));
-      dispatch(setChats([data]));
     } catch (error) {
       toast.error("Internal Serever Error!");
       console.log("Error in rendering chats", error);
     }
   };
-
-  console.log(searchedUser);
 
   return (
     <>

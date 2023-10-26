@@ -7,7 +7,7 @@ const initialState = {
   showProfile: false,
   searchedUsers: [],
   selectedChat: {},
-  chat: [],
+  chats: [],
 };
 const userSlice = createSlice({
   name: "user",
@@ -32,26 +32,17 @@ const userSlice = createSlice({
       state.showProfile = !state.showProfile;
       return state;
     },
+
     setSearchedUsers: (state, action) => {
       state.searchedUsers = action.payload;
     },
+
     setSelectedChat: (state, actions) => {
       state.selectedChat = actions.payload;
     },
-    setChats: (state, action) => {
-      // Check if the chat already exists in the state
-      const newChat = action.payload[0]; // Assuming payload is an array with a single chat object
-      const existingChatIndex = state.chat.findIndex(
-        (chat) => chat.chatId === newChat.chatId
-      ); // Modify 'chatId' to match your chat data structure
 
-      if (existingChatIndex !== -1) {
-        // Chat already exists, update the chat data in the state
-        state.chat[existingChatIndex] = newChat; // Assuming 'newChat' contains the updated chat information
-      } else {
-        // Chat doesn't exist, add the new chat to the state
-        state.chat.push(newChat);
-      }
+    setChats: (state, actions) => {
+      state.chats = actions.payload;
     },
   },
 });

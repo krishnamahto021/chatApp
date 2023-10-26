@@ -51,7 +51,6 @@ module.exports.oneToOneChat = async function (req, res) {
   }
 };
 
-
 module.exports.fetchChat = async function (req, res) {
   try {
     var chats = await Chat.find({ users: { $elemMatch: { $eq: req.user } } })
