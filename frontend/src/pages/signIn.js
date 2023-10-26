@@ -25,6 +25,7 @@ const SignIn = () => {
       if (data.status === 200) {
         toast.success("Signed In successfull!! ");
         localStorage.setItem("user", JSON.stringify(data.data.data.user));
+        console.log();
         navigate("/user/chat");
       } else if (data.status === 201) {
         toast.error("Password invalid!!");

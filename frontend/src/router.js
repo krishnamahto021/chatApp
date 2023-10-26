@@ -5,13 +5,15 @@ import { useSelector } from "react-redux"; // Import useSelector for Redux
 import { userSelector } from "./redux/reducers/userReducer";
 
 export const ProtectedRouteChat = ({ element }) => {
-  const isAuthenticated = useSelector(userSelector);
-  return isAuthenticated ? element : <Navigate to="/" />;
+  const { initialUser } = useSelector(userSelector);
+  console.log(initialUser);
+  return initialUser.token ? element : <Navigate to="/" />;
 };
 
 export const ProtectedRoute = ({ element }) => {
-  const isAuthenticated = useSelector(userSelector);
-  return isAuthenticated ? <Navigate to="/user/chat" /> : element;
+  const { initialUser } = useSelector(userSelector);
+  console.log(initialUser);
+  return initialUser.token ? <Navigate to="/user/chat" /> : element;
 };
 
 export const router = createBrowserRouter([

@@ -14,7 +14,6 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
 
   const postDetails = (pic) => {
-    console.log("hiag");
     setLoading(true);
     if (pic === undefined) {
       toast.error("Please select the image");
@@ -61,6 +60,7 @@ const SignUp = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
+          
         },
       };
       const data = await axios.post(

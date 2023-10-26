@@ -14,11 +14,11 @@ const HomePage = () => {
     setSignUp(p);
   };
 
-  const token = useSelector(userSelector);
+  const { initialUser } = useSelector(userSelector);
 
   useEffect(() => {
-    dispatch(authorizeUser()); 
-  }, [dispatch, navigate, token]);
+    dispatch(authorizeUser());
+  }, [dispatch, navigate, initialUser.token]);
 
   return (
     <>

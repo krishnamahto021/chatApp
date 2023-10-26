@@ -5,7 +5,7 @@ dotEnv.config();
 
 module.exports.signUp = async function (req, res) {
   try {
-    const { name, email, password, profilePic } = req.body;
+    const { name, email, password, profileImage } = req.body;
 
     const user = await User.findOne({ email });
     if (user) {
@@ -14,16 +14,21 @@ module.exports.signUp = async function (req, res) {
         _id: user._id,
         name: user.name,
         email: user.email,
-        profilePic: user.profilePic,
+        profileImage: user.profileImage,
       });
     } else {
-      const newUser = await User.create({ name, email, password, profilePic });
+      const newUser = await User.create({
+        name,
+        email,
+        password,
+        profileImage,
+      });
       // console.log(newUser);
       res.status(201).json({
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        profilePic: newUser.profilePic,
+        profileImage: newUser.profileImage,
       });
     }
   } catch (err) {
@@ -77,8 +82,6 @@ module.exports.signIn = async function (req, res) {
   }
 };
 
-module.exports.chatApi = async function (req, res) {};
-
 // /user/search-user/?search?=name
 module.exports.searchUser = async function (req, res) {
   const keyword = req.query.search
@@ -96,7 +99,8 @@ module.exports.searchUser = async function (req, res) {
 const tokenBlacklist = new Set(); // Initialize a Set to store blacklisted tokens
 
 module.exports.logOut = function (req, res) {
-  const token = req.params.token;
+  const token = req.user.token;
+  console.log("logged out");
   if (token) {
     // Add the token to the blacklist
     tokenBlacklist.add(token);

@@ -1,11 +1,16 @@
 import axios from "axios";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { userSelector } from "../redux/reducers/userReducer";
+import {
+  setChats,
+  setSelectedChat,
+  userSelector,
+} from "../redux/reducers/userReducer";
 
 const UserView = (props) => {
   const { initialUser } = useSelector(userSelector);
+  const dispatch = useDispatch();
   const { searchedUser } = props;
   const createChat = async (userId) => {
     try {
@@ -16,12 +21,15 @@ const UserView = (props) => {
         },
       };
       const { data } = await axios.post("/user/chat", { userId }, config);
-      console.log(data);
+      dispatch(setSelectedChat(data));
+      dispatch(setChats([data]));
     } catch (error) {
       toast.error("Internal Serever Error!");
       console.log("Error in rendering chats", error);
     }
   };
+
+  console.log(searchedUser);
 
   return (
     <>

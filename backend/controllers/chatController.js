@@ -7,8 +7,11 @@ module.exports.oneToOneChat = async function (req, res) {
   const { userId } = req.body;
   if (!userId) {
     console.log("UserId not sent with the request");
-    return res.send(400);
+    return res.status(400).json({
+      message: "Internal Server Error!",
+    });
   }
+
   var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
@@ -23,29 +26,31 @@ module.exports.oneToOneChat = async function (req, res) {
     path: "latestMessage.sender",
     select: "name profileImage email",
   });
+
   if (isChat.length > 0) {
-    res.status(200).json(isChat[0]);
+    // If an existing chat is found, send the existing chat as the response
+    return res.status(200).json(isChat[0]);
   } else {
+    // If no chat is found, create a new chat and send it as the response
     var chatData = {
       chatName: "sender",
       isGroupChat: false,
       users: [req.user, userId],
     };
-  }
-  try {
-    const createdChat = await Chat.create(chatData);
-    const fullChat = await Chat.findOne({ _id: createdChat._id }).populate(
-      "users",
-      "-password"
-    );
-    res.status(200).json(fullChat);
-  } catch (error) {
-    console.log(`Error in creating chat ${error}`);
-    res.status(400).json({
-      message: "Not created the chat ",
-    });
+    try {
+      const createdChat = await Chat.create(chatData);
+      const fullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+        "users",
+        "-password"
+      );
+      return res.status(200).json(fullChat);
+    } catch (error) {
+      console.log(`Error in creating chat ${error}`);
+      return res.status(400).json("Not created the chat ");
+    }
   }
 };
+
 
 module.exports.fetchChat = async function (req, res) {
   try {

@@ -7,7 +7,7 @@ const passport = require("passport");
 router.post("/sign-up", userController.signUp);
 router.post("/sign-in", userController.signIn);
 
-router.get("/log-out/:token", userController.logOut);
+// router.get("/log-out", userController.logOut);
 router.get("/search-user", userController.searchUser);
 router.post(
   "/chat",
