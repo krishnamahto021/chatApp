@@ -5,7 +5,6 @@ const dotEnv = require("dotenv").config();
 
 module.exports.oneToOneChat = async function (req, res) {
   const { userId } = req.body;
-
   if (!userId) {
     console.log("UserId not sent with the request");
     return res.send(400);
@@ -24,9 +23,8 @@ module.exports.oneToOneChat = async function (req, res) {
     path: "latestMessage.sender",
     select: "name profileImage email",
   });
-
   if (isChat.length > 0) {
-    res.send(isChat[0]);
+    res.status(200).json(isChat[0]);
   } else {
     var chatData = {
       chatName: "sender",

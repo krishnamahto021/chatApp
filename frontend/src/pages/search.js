@@ -10,13 +10,14 @@ const SearchBar = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  const { searchedUsers } = useSelector(userSelector);
+  const { searchedUsers ,initialUser} = useSelector(userSelector);
 
   const handleSearch = async () => {
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
+          Authorization: `Bearer ${initialUser.token}`,
         },
       };
       const { data } = await axios.get(
@@ -52,6 +53,7 @@ const SearchBar = () => {
                 className="ml-2 focus:border-transparent focus:outline-none bg-inherit placeholder:text-black border-b border-black"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                required
               ></input>
             </div>
             <button
@@ -59,6 +61,12 @@ const SearchBar = () => {
               onClick={handleSearch}
             >
               Go
+            </button>
+            <button
+              className="text-2xl font-semibold "
+              onClick={() => setToggleSearch(!toggleSearch)}
+            >
+              X
             </button>
           </div>
           {searchedUsers.length > 0 ? (
