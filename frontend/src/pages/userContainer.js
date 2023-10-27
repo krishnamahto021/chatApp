@@ -36,7 +36,6 @@ const UserContainer = () => {
   };
 
   const toggleGroupChatFormFucntion = () => {
-    console.log("hi");
     setToggleGroupChatForm(!toggleGroupChatForm);
   };
 

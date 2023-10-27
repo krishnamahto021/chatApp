@@ -93,7 +93,7 @@ module.exports.searchUser = async function (req, res) {
         ],
       }
     : {};
-  const users = await User.find(keyword);
+  const users = await User.find(keyword).select("-password");
   res.send(users);
 };
 

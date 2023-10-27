@@ -2,16 +2,12 @@ import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import {
-  setChats,
-  setSelectedChat,
-  userSelector,
-} from "../redux/reducers/userReducer";
+import { setSelectedChat, userSelector } from "../redux/reducers/userReducer";
 
 const UserView = (props) => {
   const { initialUser } = useSelector(userSelector);
   const dispatch = useDispatch();
-  const { searchedUser } = props;
+  const { searchedUser, handleFunction } = props;
   const createChat = async (userId) => {
     try {
       const config = {
@@ -27,14 +23,13 @@ const UserView = (props) => {
       console.log("Error in rendering chats", error);
     }
   };
-
   return (
     <>
       <div
         className="container flex gap-2 m-1  border-b border-gray-400 hover:bg-gray-400 cursor-pointer "
         onClick={() => createChat(searchedUser._id)}
       >
-        <div className="imageContainer m-1 p-2">
+        <div className="imageContainer m-1 p-2" onClick={handleFunction}>
           <img
             src={searchedUser.profileImage}
             alt={searchedUser.name}
