@@ -10,7 +10,7 @@ const SearchBar = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  const { searchedUsers ,initialUser} = useSelector(userSelector);
+  const { searchedUsers, initialUser } = useSelector(userSelector);
 
   const handleSearch = async () => {
     try {
@@ -30,6 +30,8 @@ const SearchBar = () => {
       toast.error("Internal server Error!");
     }
   };
+
+ 
 
   return (
     <>

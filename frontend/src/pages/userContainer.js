@@ -30,15 +30,26 @@ const UserContainer = () => {
     fetchChats();
   }, []);
 
-  const getName = (users) => {
-    const otherUser = users.find((obj) => obj._id !== initialUser.id);
-    return otherUser;
+  const getName = (chat) => {
+    if (chat.isGroupChat) {
+      // If it's a group chat without an image, add a default image
+      return {
+        ...chat,
+        profileImage: "https://cdn-icons-png.flaticon.com/512/2352/2352167.png",
+        name: chat.chatName,
+      };
+    } else {
+      let users = chat.users;
+      const otherUser = users.find((obj) => obj._id !== initialUser.id);
+      return otherUser;
+    }
   };
 
   const toggleGroupChatFormFucntion = () => {
     setToggleGroupChatForm(!toggleGroupChatForm);
   };
 
+  console.log("rendered", chats);
   return (
     <>
       <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh]">
@@ -52,9 +63,9 @@ const UserContainer = () => {
         </div>
         <div className="usersContainer w-[385px] pl-1">
           {chats.length > 0 ? (
-            chats.map((c) => {
-              const user = getName(c.users);
-              return <UserView searchedUser={user} />;
+            chats.map((c, index) => {
+              const user = getName(c);
+              return <UserView key={index} searchedUser={user} />;
             })
           ) : (
             <p>No Chats found</p>

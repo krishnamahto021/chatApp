@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { setSelectedChat, userSelector } from "../redux/reducers/userReducer";
+import { setChats, userSelector } from "../redux/reducers/userReducer";
 
 const UserView = (props) => {
   const { initialUser } = useSelector(userSelector);
@@ -17,12 +17,13 @@ const UserView = (props) => {
         },
       };
       const { data } = await axios.post("/user/chat", { userId }, config);
-      dispatch(setSelectedChat(data));
+      dispatch(setChats(data));
     } catch (error) {
       toast.error("Internal Serever Error!");
       console.log("Error in rendering chats", error);
     }
   };
+
   return (
     <>
       <div
@@ -31,13 +32,13 @@ const UserView = (props) => {
       >
         <div className="imageContainer m-1 p-2" onClick={handleFunction}>
           <img
-            src={searchedUser.profileImage}
-            alt={searchedUser.name}
+            src={searchedUser?.profileImage}
+            alt={searchedUser?.name}
             className="image w-14 h-w-14 rounded-full "
           ></img>
         </div>
         <div className="textContainer flex flex-col m-4 ">
-          <p className="userName text-[18px] ">{searchedUser.name}</p>
+          <p className="userName text-[18px] ">{searchedUser?.name}</p>
           <p>Message</p>
         </div>
       </div>

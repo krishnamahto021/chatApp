@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { userSelector } from "../redux/reducers/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setChats, userSelector } from "../redux/reducers/userReducer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserView from "./userView";
@@ -12,7 +12,8 @@ const CreateGroupChatFrom = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const { initialUser } = useSelector(userSelector);
+  const { initialUser, chats } = useSelector(userSelector);
+  const dispatch = useDispatch();
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -70,13 +71,15 @@ const CreateGroupChatFrom = (props) => {
         },
         config
       );
-      toast.success("Group Char Created Successfully !");
+      dispatch(setChats(data));
+      toast.success("Group Chat Created Successfully!");
       toggleGroupChatFormFucntion();
     } catch (error) {
       console.log(`Error in creating group Chat ${error}`);
       toast.error(`Internal Server Error!`);
     }
   };
+
   return (
     <>
       <div
@@ -107,6 +110,7 @@ const CreateGroupChatFrom = (props) => {
                 <>
                   <UserBadge
                     user={user}
+                    key={user.id}
                     handleDelete={() => handleDelete(user)}
                   />
                 </>

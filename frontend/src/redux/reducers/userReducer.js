@@ -41,8 +41,31 @@ const userSlice = createSlice({
       state.selectedChat = actions.payload;
     },
 
-    setChats: (state, actions) => {
-      state.chats = actions.payload;
+    setChats: (state, action) => {
+      const payload = action.payload;
+      if (Array.isArray(payload)) {
+        // If payload is an array (dispatched from userContainer)
+        // Filter out duplicates from the payload and add only new chats to the state
+        const newChats = payload.filter(
+          (chat) =>
+            !state.chats.some((existingChat) => existingChat.id === chat.id)
+        );
+        state.chats = [...newChats, ...state.chats];
+      } else if (typeof payload === "object") {
+        // If payload is an object (dispatched from createGroupChat)
+        // You may want to merge it with the existing chats or handle it differently
+        const existingChatIndex = state.chats.findIndex(
+          (existingChat) => existingChat._id === payload._id
+        );
+        if (existingChatIndex !== -1) {
+          // Chat already exists, update it
+          state.chats[existingChatIndex] = payload;
+        } else {
+          // Chat doesn't exist, add it
+          state.chats = [payload, ...state.chats];
+        }
+        console.log(state.chats);
+      }
     },
   },
 });
