@@ -5,7 +5,7 @@ const dotEnv = require("dotenv").config();
 
 module.exports.oneToOneChat = async function (req, res) {
   const { userId } = req.body;
-  console.log("inside one to one", userId);
+
 
   if (!userId) {
     console.log("UserId not sent with the request");
@@ -13,7 +13,7 @@ module.exports.oneToOneChat = async function (req, res) {
       message: "Internal Server Error!",
     });
   }
-  console.log(req.user);
+
 
   const user = await User.findById(userId);
   if (!user) {
@@ -36,7 +36,6 @@ module.exports.oneToOneChat = async function (req, res) {
     select: "name profileImage email",
   });
 
-  console.log(isChat);
 
   if (isChat.length > 0) {
     // If an existing chat is found, send the existing chat as the response

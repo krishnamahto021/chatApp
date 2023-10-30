@@ -43,7 +43,6 @@ const UserContainer = () => {
         name: chat.chatName,
       };
     } else {
-      console.log(chat.users);
       if (chat.users === undefined) {
         return;
       }

@@ -3,9 +3,10 @@ import SearchBar from "../pages/search";
 import { IoNotifications } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleShowProfile, userSelector } from "../redux/reducers/userReducer";
+import UserProfile from "./userProfile";
 
 const NavBar = () => {
-  const { initialUser } = useSelector(userSelector);
+  const { initialUser, showProfile } = useSelector(userSelector);
   const dispatch = useDispatch();
   return (
     <>
@@ -18,7 +19,7 @@ const NavBar = () => {
           <IoNotifications className="font-bold text-2xl cursor-pointer" />
           <div
             className="user cursor-pointer"
-            onClick={() => dispatch(toggleShowProfile())}
+            onClick={() => dispatch(toggleShowProfile(initialUser))}
           >
             <img
               src={initialUser.profileImage}
@@ -26,6 +27,8 @@ const NavBar = () => {
               className="w-8 h-8 rounded-full"
             ></img>
           </div>
+
+          {showProfile ? <UserProfile /> : null}
         </div>
       </div>
     </>
