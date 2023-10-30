@@ -5,17 +5,26 @@ const dotEnv = require("dotenv").config();
 
 module.exports.oneToOneChat = async function (req, res) {
   const { userId } = req.body;
+  console.log("inside one to one", userId);
+
   if (!userId) {
     console.log("UserId not sent with the request");
     return res.status(400).json({
       message: "Internal Server Error!",
     });
   }
+  console.log(req.user);
 
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(200).json({
+      message: "Group Chat Id Sent!",
+    });
+  }
   var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user } } },
+      { users: { $elemMatch: { $eq: req.user._id } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
@@ -26,6 +35,8 @@ module.exports.oneToOneChat = async function (req, res) {
     path: "latestMessage.sender",
     select: "name profileImage email",
   });
+
+  console.log(isChat);
 
   if (isChat.length > 0) {
     // If an existing chat is found, send the existing chat as the response
@@ -74,6 +85,7 @@ module.exports.createGroupChat = async function (req, res) {
     return res.status(400).send("Need more than 2 memebers to create group");
   }
   users.push(req.user);
+  console.log("group chat");
   try {
     const groupChat = await Chat.create({
       chatName: req.body.name,

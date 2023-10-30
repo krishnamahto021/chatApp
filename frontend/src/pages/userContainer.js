@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setChats, userSelector } from "../redux/reducers/userReducer";
+import {
+  setChats,
+  setSelectedChat,
+  userSelector,
+} from "../redux/reducers/userReducer";
 import UserView from "./userView";
 import axios from "axios";
 import CreateGroupChatFrom from "./createGroupChatFrom";
@@ -39,6 +43,10 @@ const UserContainer = () => {
         name: chat.chatName,
       };
     } else {
+      console.log(chat.users);
+      if (chat.users === undefined) {
+        return;
+      }
       let users = chat.users;
       const otherUser = users.find((obj) => obj._id !== initialUser.id);
       return otherUser;
@@ -49,7 +57,10 @@ const UserContainer = () => {
     setToggleGroupChatForm(!toggleGroupChatForm);
   };
 
-  console.log("rendered", chats);
+  const setSelectedChatFunction = (chat) => {
+    dispatch(setSelectedChat(chat));
+  };
+
   return (
     <>
       <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh]">
@@ -65,7 +76,13 @@ const UserContainer = () => {
           {chats.length > 0 ? (
             chats.map((c, index) => {
               const user = getName(c);
-              return <UserView key={index} searchedUser={user} />;
+              return (
+                <UserView
+                  key={index}
+                  searchedUser={user}
+                  setSelectedChat={() => setSelectedChatFunction(c)}
+                />
+              );
             })
           ) : (
             <p>No Chats found</p>

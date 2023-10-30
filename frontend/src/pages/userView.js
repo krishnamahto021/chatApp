@@ -7,7 +7,7 @@ import { setChats, userSelector } from "../redux/reducers/userReducer";
 const UserView = (props) => {
   const { initialUser } = useSelector(userSelector);
   const dispatch = useDispatch();
-  const { searchedUser, handleFunction } = props;
+  const { searchedUser, handleFunction, setSelectedChat } = props;
   const createChat = async (userId) => {
     try {
       const config = {
@@ -37,7 +37,10 @@ const UserView = (props) => {
             className="image w-14 h-w-14 rounded-full "
           ></img>
         </div>
-        <div className="textContainer flex flex-col m-4 ">
+        <div
+          className="textContainer flex flex-col m-4 "
+          onClick={setSelectedChat}
+        >
           <p className="userName text-[18px] ">{searchedUser?.name}</p>
           <p>Message</p>
         </div>
