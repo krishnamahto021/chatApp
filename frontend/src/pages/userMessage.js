@@ -18,7 +18,7 @@ const UserMessage = () => {
     <>
       <div className="userMessage m-3 p-3 bg-gray-300 w-full rounded-md">
         <div className="messageContainer">
-          {selectedChat?.chatName ? (
+          {selectedChat.chatName ? (
             <div>
               <nav className="chatNavBar flex items-center justify-between bg-gray-300 p-2">
                 <div className="nameContainer uppercase">

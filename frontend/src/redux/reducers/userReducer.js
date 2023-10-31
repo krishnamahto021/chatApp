@@ -81,6 +81,13 @@ const userSlice = createSlice({
         // console.log(state.chats);
       }
     },
+
+    removeUserFromGroupChat: (state, action) => {
+      const userIdToRemove = action.payload;
+      state.selectedChat.users = state.selectedChat.users.filter(
+        (u) => u._id !== userIdToRemove
+      );
+    },
   },
 });
 
@@ -92,5 +99,6 @@ export const {
   setSearchedUsers,
   setSelectedChat,
   setChats,
+  removeUserFromGroupChat,
 } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;
