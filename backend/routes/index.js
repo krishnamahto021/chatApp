@@ -45,7 +45,7 @@ router.post(
 router.post(
   "/add-user-group-chat",
   passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
-  chatController.addUser
+  chatController.addUsers
 );
 
 router.post(

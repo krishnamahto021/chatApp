@@ -12,7 +12,6 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const { initialUser, showUserProfile, selectedChat } =
     useSelector(userSelector);
-  console.log(selectedChat.isGroupChat, showUserProfile);
 
   return (
     <div>

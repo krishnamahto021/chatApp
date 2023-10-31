@@ -88,6 +88,10 @@ const userSlice = createSlice({
         (u) => u._id !== userIdToRemove
       );
     },
+    addUserToGroup: (state, action) => {
+      const userToAdd = action.payload;
+      state.selectedChat.users = [userToAdd, ...state.selectedChat.users];
+    },
   },
 });
 
@@ -100,5 +104,6 @@ export const {
   setSelectedChat,
   setChats,
   removeUserFromGroupChat,
+  addUserToGroup,
 } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;

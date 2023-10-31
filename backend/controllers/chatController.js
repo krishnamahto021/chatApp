@@ -123,13 +123,14 @@ module.exports.renameChatGroup = async function (req, res) {
   }
 };
 
-module.exports.addUser = async function (req, res) {
+module.exports.addUsers = async function (req, res) {
   try {
-    const { chatId, userId } = req.body;
+    const { chatId, userIds } = req.body; // Change to userIds which should be an array
+    console.log(chatId, userIds);
 
     const updatedChat = await Chat.findByIdAndUpdate(
       chatId,
-      { $push: { users: userId } },
+      { $push: { users: { $each: userIds } } }, // Use $each to push multiple userIds
       { new: true }
     )
       .populate("users", "-password")
@@ -137,15 +138,16 @@ module.exports.addUser = async function (req, res) {
 
     if (!updatedChat) {
       console.log("Error in adding the users in the chat");
-      return res.send(400).send("Internal Server Error");
+      return res.status(400).send("Internal Server Error"); // Correct the status code
     } else {
-      return res.status(200).send(updatedChat);
+      return res.status(200).send(updatedChat); // Correct the status code
     }
   } catch (error) {
     console.log(`Error in adding the users ${error}`);
-    return res.status(400).send("Internal SErver error!!");
+    return res.status(400).send("Internal Server error!!"); // Correct the status code
   }
 };
+
 
 module.exports.removeUser = async function (req, res) {
   try {
