@@ -18,10 +18,15 @@ const UpdateGroupChat = () => {
   const [groupName, setGroupName] = useState(selectedChat.chatName);
   const [searchResult, setSearchResult] = useState([]);
   const dispatch = useDispatch();
-
   const handleDelete = async (chatId, userId) => {
     try {
-      console.log(chatId, userId);
+      if (
+        selectedChat.groupAdmin._id !== initialUser.id &&
+        userId !== initialUser.id
+      ) {
+        toast.error(`Only Admins can do changes `);
+        return;
+      }
       const config = {
         headers: {
           "Content-type": "application/json",
@@ -34,9 +39,11 @@ const UpdateGroupChat = () => {
         config
       );
       dispatch(removeUserFromGroupChat(userId));
-      console.log(selectedChat.users);
-
-      toast.success(`Deleted User Successfully!`);
+      if (userId !== initialUser.id) {
+        toast.success(`Deleted User Successfully!`);
+      } else {
+        toast.success(`Left Group`);
+      }
     } catch (error) {
       toast.error(`Internal Server Error!`);
       console.log(`Error in deleting user ${error}`);
@@ -62,18 +69,30 @@ const UpdateGroupChat = () => {
     }
   };
 
-  const handleGroup = async (userToAdd) => {
-    if (selectedChat.users.includes(userToAdd)) {
-      toast.error(`User Already Exists`);
-    } else {
-      setSelectedUsers([...selectedUsers, userToAdd]);
-      dispatch(addUserToGroup(userToAdd));
-      toast.success(`Added User`);
-    }
-  };
+ const handleGroup = async (userToAdd) => {
+   if (selectedChat.groupAdmin._id !== initialUser.id) {
+     toast.error(`Only Admins can make changes`);
+     return;
+   }
+
+   // Check if userToAdd._id exists in the selectedChat.users array
+   if (selectedChat.users.some((user) => user._id === userToAdd._id)) {
+     toast.error(`User Already Exists`);
+   } else {
+     setSelectedUsers([...selectedUsers, userToAdd]);
+     dispatch(addUserToGroup(userToAdd));
+     toast.success(`Added User`);
+   }
+ };
+
 
   const handleSubmit = async () => {
     try {
+      console.log(selectedChat.groupAdmin._id, initialUser.id);
+      if (selectedChat.groupAdmin._id !== initialUser.id) {
+        toast.error(`Only Admins can do changes `);
+        return;
+      }
       const config = {
         headers: {
           "Content-type": "application/json",
@@ -150,13 +169,22 @@ const UpdateGroupChat = () => {
           )}
         </div>
 
-        <button
-          className="p-3 ml-56 bg-violet-500 hover:bg-violet-600 rounded-xl text-white"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Update
-        </button>
+        <div className="buttonContainer flex">
+          <button
+            className="p-3 ml-56 bg-red-500 hover:bg-red-600 rounded-xl text-white"
+            type="submit"
+            onClick={() => handleDelete(selectedChat._id, initialUser.id)}
+          >
+            Leave Group
+          </button>
+          <button
+            className="p-3 ml-56 bg-violet-500 hover:bg-violet-600 rounded-xl text-white"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Update
+          </button>
+        </div>
       </div>
     </>
   );
