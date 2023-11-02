@@ -61,4 +61,10 @@ router.post(
   messageController.sendMessage
 );
 
+router.get(
+  "/chat/message/:chatId",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  messageController.fetchAllMessages
+);
+
 module.exports = router;
