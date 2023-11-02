@@ -9,6 +9,7 @@ const initialState = {
   searchedUsers: [],
   selectedChat: {},
   chats: [],
+  messageArray: [],
 };
 const userSlice = createSlice({
   name: "user",
@@ -92,6 +93,16 @@ const userSlice = createSlice({
       const userToAdd = action.payload;
       state.selectedChat.users = [userToAdd, ...state.selectedChat.users];
     },
+
+    setMessageArray: (state, action) => {
+      const payload = action.payload;
+      if (Array.isArray(payload)) {
+        console.log("array");
+        state.messageArray = [...payload];
+      } else {
+        state.messageArray = [...state.messageArray, payload];
+      }
+    },
   },
 });
 
@@ -105,5 +116,6 @@ export const {
   setChats,
   removeUserFromGroupChat,
   addUserToGroup,
+  setMessageArray,
 } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;

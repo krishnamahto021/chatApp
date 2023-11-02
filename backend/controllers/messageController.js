@@ -22,9 +22,7 @@ module.exports.sendMessage = async function (req, res) {
     });
 
     await Chat.findOneAndUpdate({ _id: chatId }, { latestMessage: message });
-    res.json(message);
-
-    // res.status(200).send(message);
+    res.status(200).send(message);
   } catch (error) {
     console.log("Error in sending message", error);
     res.status(400).send("Internal Server Error");
