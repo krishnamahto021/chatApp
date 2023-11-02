@@ -85,6 +85,7 @@ module.exports.signIn = async function (req, res) {
 
 // /user/search-user/?search?=name
 module.exports.searchUser = async function (req, res) {
+  console.log(req.user);
   const keyword = req.query.search
     ? {
         $or: [
@@ -101,7 +102,6 @@ const tokenBlacklist = new Set(); // Initialize a Set to store blacklisted token
 
 module.exports.logOut = function (req, res) {
   const token = req.user.token;
-  console.log("logged out");
   if (token) {
     // Add the token to the blacklist
     tokenBlacklist.add(token);

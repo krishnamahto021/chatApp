@@ -69,22 +69,21 @@ const UpdateGroupChat = () => {
     }
   };
 
- const handleGroup = async (userToAdd) => {
-   if (selectedChat.groupAdmin._id !== initialUser.id) {
-     toast.error(`Only Admins can make changes`);
-     return;
-   }
+  const handleGroup = async (userToAdd) => {
+    if (selectedChat.groupAdmin._id !== initialUser.id) {
+      toast.error(`Only Admins can make changes`);
+      return;
+    }
 
-   // Check if userToAdd._id exists in the selectedChat.users array
-   if (selectedChat.users.some((user) => user._id === userToAdd._id)) {
-     toast.error(`User Already Exists`);
-   } else {
-     setSelectedUsers([...selectedUsers, userToAdd]);
-     dispatch(addUserToGroup(userToAdd));
-     toast.success(`Added User`);
-   }
- };
-
+    // Check if userToAdd._id exists in the selectedChat.users array
+    if (selectedChat.users.some((user) => user._id === userToAdd._id)) {
+      toast.error(`User Already Exists`);
+    } else {
+      setSelectedUsers([...selectedUsers, userToAdd]);
+      dispatch(addUserToGroup(userToAdd));
+      toast.success(`Added User`);
+    }
+  };
 
   const handleSubmit = async () => {
     try {

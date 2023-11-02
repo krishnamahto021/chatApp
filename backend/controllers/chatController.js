@@ -5,7 +5,6 @@ const dotEnv = require("dotenv").config();
 
 module.exports.oneToOneChat = async function (req, res) {
   const { userId } = req.body;
-
   if (!userId) {
     console.log("UserId not sent with the request");
     return res.status(400).json({
@@ -60,18 +59,23 @@ module.exports.oneToOneChat = async function (req, res) {
 
 module.exports.fetchChat = async function (req, res) {
   try {
-    var chats = await Chat.find({ users: { $elemMatch: { $eq: req.user } } })
+    const results = await Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
-      .sort({ updatedAt: -1 }); // to sort the latest chat first
-    chats = await User.populate(chats, {
+      .sort({ updatedAt: -1 })
+      .exec();
+
+    const populatedResults = await User.populate(results, {
       path: "latestMessage.sender",
-      select: "name profileImage email",
+      select: "name pic email",
     });
-    res.send(chats);
+    res.status(200).send(populatedResults);
   } catch (error) {
-    console.log(`Error in fetching the chat ${error}`);
+    res.status(400);
+    throw new Error(error.message);
   }
 };
 
@@ -148,7 +152,6 @@ module.exports.addUsers = async function (req, res) {
   }
 };
 
-
 module.exports.removeUser = async function (req, res) {
   try {
     const { chatId, userId } = req.body;
@@ -159,7 +162,8 @@ module.exports.removeUser = async function (req, res) {
       { new: true }
     )
       .populate("users", "-password")
-      .populate("groupAdmin", "-password");
+      .populate("groupAdmin", "-password")
+      .populate("latestMessage");
 
     if (!updatedChat) {
       console.log("Error in adding the users in the chat");

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const chatController = require("../controllers/chatController");
+const messageController = require("../controllers/messageController");
 const passport = require("passport");
 
 router.post("/sign-up", userController.signUp);
@@ -52,6 +53,12 @@ router.post(
   "/remove-user-group-chat",
   passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   chatController.removeUser
+);
+
+router.post(
+  "/chat/message",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  messageController.sendMessage
 );
 
 module.exports = router;
