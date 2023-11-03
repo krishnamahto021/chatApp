@@ -5,10 +5,15 @@ import { setMessageArray, userSelector } from "../redux/reducers/userReducer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ScrollableChat from "./scrollableChat";
+import { io } from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
 
 const UserMessageForm = () => {
   const [message, setMessage] = useState("");
   const { selectedChat, initialUser } = useSelector(userSelector);
+  const [socketIo, setSocketIo] = useState(false);
   const dispatch = useDispatch();
 
   const fetchAllMessages = async () => {
@@ -23,6 +28,7 @@ const UserMessageForm = () => {
         config
       );
       dispatch(setMessageArray(data));
+      socket.emit("joinChat", selectedChat._id);
     } catch (error) {
       console.log(`Error in fetching chat ${error}`);
       toast.error(`Error in fetching chats`);
@@ -50,13 +56,36 @@ const UserMessageForm = () => {
       { chatId: selectedChat._id, content: message },
       config
     );
+    socket.emit("newMessage", data);
     dispatch(setMessageArray(data));
     clearInput();
   };
 
   useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", initialUser);
+    socket.on("connected", () => setSocketIo(true));
+  });
+
+  useEffect(() => {
     fetchAllMessages();
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("messageRecieved", (newMessageRec) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRec.chat._id
+      ) {
+        // show notification
+        // return;
+      } else {
+        console.log("hi");
+        dispatch(setMessageArray(newMessageRec));
+      }
+    });
+  });
 
   return (
     <>

@@ -97,7 +97,6 @@ const userSlice = createSlice({
     setMessageArray: (state, action) => {
       const payload = action.payload;
       if (Array.isArray(payload)) {
-        console.log("array");
         state.messageArray = [...payload];
       } else {
         state.messageArray = [...state.messageArray, payload];

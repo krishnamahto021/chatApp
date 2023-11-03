@@ -5,7 +5,6 @@ import ScrollableFeed from "react-scrollable-feed";
 
 const ScrollableChat = () => {
   const { messageArray, initialUser } = useSelector(userSelector);
-  console.log(messageArray[0]);
   const leftOrRight = (message) => {
     if (message.sender._id === initialUser.id) {
       return "left";

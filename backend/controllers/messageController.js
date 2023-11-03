@@ -35,7 +35,6 @@ module.exports.fetchAllMessages = async function (req, res) {
       .populate("sender", "name profileImage email")
       .populate("chat");
 
-    console.log(messages);
     res.status(200).send(messages);
   } catch (error) {
     console.log(`Error in fetching all the message ${error}`);
