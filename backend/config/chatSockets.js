@@ -22,15 +22,7 @@ module.exports.chatSockets = function (socketServer) {
         console.log(`chat users not defined`);
         return;
       }
-      console.log(newMessageRec);
-      chat.users.forEach((user) => {
-        if (user._id === newMessageRec.sender._id) {
-          console.log("Same sender and reciver ");
-          return;
-        }
-        // socket.in(user._id).emit("messageRecieved", newMessageRec);
-        io.to(chat._id).emit("messageRecieved", newMessageRec);
-      });
+      io.to(chat._id).emit("messageRecieved", newMessageRec);
     });
 
     socket.on("disconnect", function () {

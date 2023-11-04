@@ -62,10 +62,14 @@ const UserMessageForm = () => {
   };
 
   useEffect(() => {
+    console.log("Setting up socket and event listeners...");
     socket = io(ENDPOINT);
     socket.emit("setup", initialUser);
-    socket.on("connected", () => setSocketIo(true));
-  });
+    socket.on("connected", () => {
+      console.log("Connected event received.");
+      setSocketIo(true);
+    });
+  }, []);
 
   useEffect(() => {
     fetchAllMessages();
@@ -81,11 +85,12 @@ const UserMessageForm = () => {
         // show notification
         // return;
       } else {
-        console.log("hi");
-        dispatch(setMessageArray(newMessageRec));
+        if (newMessageRec.sender._id !== initialUser.id) {
+          dispatch(setMessageArray(newMessageRec));
+        }
       }
     });
-  });
+  }, []);
 
   return (
     <>
