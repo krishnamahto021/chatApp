@@ -16,12 +16,16 @@ module.exports.chatSockets = function (socketServer) {
       console.log(`User joined the room ${room}`);
     });
 
+    socket.on("typing", (room) => socket.in(room).emit("typing"));
+    socket.on("stopTyping", (room) => socket.in(room).emit("stopTyping"));
+
     socket.on("newMessage", (newMessageRec) => {
       var chat = newMessageRec.chat;
       if (!chat.users) {
         console.log(`chat users not defined`);
         return;
       }
+      // to braodcast to all the users of the room expect the sender
       io.to(chat._id).emit("messageRecieved", newMessageRec);
     });
 

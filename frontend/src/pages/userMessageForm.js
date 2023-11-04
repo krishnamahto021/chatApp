@@ -14,7 +14,42 @@ const UserMessageForm = () => {
   const [message, setMessage] = useState("");
   const { selectedChat, initialUser } = useSelector(userSelector);
   const [socketIo, setSocketIo] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("Setting up socket and event listeners...");
+    socket = io(ENDPOINT);
+    socket.emit("setup", initialUser);
+    socket.on("connected", () => {
+      console.log("Connected event received.");
+      setSocketIo(true);
+    });
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stopTyping", () => setIsTyping(false));
+  }, []);
+
+  useEffect(() => {
+    fetchAllMessages();
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("messageRecieved", (newMessageRec) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRec.chat._id
+      ) {
+        // show notification
+        // return;
+      } else {
+        // the logged in user and sender should not be same to recive the message as for sender we are already handling in the submit handler to dispatch the message
+        if (newMessageRec.sender._id !== initialUser.id) {
+          dispatch(setMessageArray(newMessageRec));
+        }
+      }
+    });
+  }, []);
 
   const fetchAllMessages = async () => {
     try {
@@ -41,10 +76,26 @@ const UserMessageForm = () => {
 
   const typingHandler = async (e) => {
     setMessage(e.target.value);
+    if (!socketIo) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= 3 && typing) {
+        socket.emit("stopTyping", selectedChat._id);
+        setTyping(false);
+      }
+    }, 3000); // stop typing is the user is not typoing for 3 seconds
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    socket.emit("stopTyping", selectedChat._id);
     const config = {
       headers: {
         "Content-type": "application/json",
@@ -61,40 +112,10 @@ const UserMessageForm = () => {
     clearInput();
   };
 
-  useEffect(() => {
-    console.log("Setting up socket and event listeners...");
-    socket = io(ENDPOINT);
-    socket.emit("setup", initialUser);
-    socket.on("connected", () => {
-      console.log("Connected event received.");
-      setSocketIo(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    fetchAllMessages();
-    selectedChatCompare = selectedChat;
-  }, [selectedChat]);
-
-  useEffect(() => {
-    socket.on("messageRecieved", (newMessageRec) => {
-      if (
-        !selectedChatCompare ||
-        selectedChatCompare._id !== newMessageRec.chat._id
-      ) {
-        // show notification
-        // return;
-      } else {
-        if (newMessageRec.sender._id !== initialUser.id) {
-          dispatch(setMessageArray(newMessageRec));
-        }
-      }
-    });
-  }, []);
-
   return (
     <>
       <ScrollableChat />
+      {isTyping ? <p>Loading ... </p> : null}
       <div className="inputContainer  gap-9 flex  content-stretch ">
         <form
           className="flex items-center content-between gap-32"
