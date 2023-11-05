@@ -6,6 +6,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ScrollableChat from "./scrollableChat";
 import { io } from "socket.io-client";
+import Lottie from "lottie-react";
+import animationData from "../animation/Animation - 1699174380745.json";
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -17,6 +19,8 @@ const UserMessageForm = () => {
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     console.log("Setting up socket and event listeners...");
     socket = io(ENDPOINT);
@@ -115,7 +119,14 @@ const UserMessageForm = () => {
   return (
     <>
       <ScrollableChat />
-      {isTyping ? <p>Loading ... </p> : null}
+      {isTyping ? (
+        <div>
+          <Lottie
+            animationData={animationData}
+            style={{ width: 60, height: 60 }}
+          />
+        </div>
+      ) : null}
       <div className="inputContainer  gap-9 flex  content-stretch ">
         <form
           className="flex items-center content-between gap-32"
