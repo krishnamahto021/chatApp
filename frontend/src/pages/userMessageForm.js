@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMessageArray, userSelector } from "../redux/reducers/userReducer";
+import {
+  setMessageArray,
+  setNotifications,
+  userSelector,
+} from "../redux/reducers/userReducer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ScrollableChat from "./scrollableChat";
@@ -14,19 +18,19 @@ var socket, selectedChatCompare;
 
 const UserMessageForm = () => {
   const [message, setMessage] = useState("");
-  const { selectedChat, initialUser } = useSelector(userSelector);
+  const { selectedChat, initialUser, notifications } =
+    useSelector(userSelector);
   const [socketIo, setSocketIo] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    console.log("Setting up socket and event listeners...");
+    // console.log("Setting up socket and event listeners...");
     socket = io(ENDPOINT);
     socket.emit("setup", initialUser);
     socket.on("connected", () => {
-      console.log("Connected event received.");
+      // console.log("Connected event received.");
       setSocketIo(true);
     });
     socket.on("typing", () => setIsTyping(true));
@@ -40,12 +44,16 @@ const UserMessageForm = () => {
 
   useEffect(() => {
     socket.on("messageRecieved", (newMessageRec) => {
+      // console.log(
+      //   !selectedChatCompare,
+      //   selectedChatCompare._id,
+      //   newMessageRec.chat._id
+      // );
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRec.chat._id
       ) {
-        // show notification
-        // return;
+        // show notifications
       } else {
         // the logged in user and sender should not be same to recive the message as for sender we are already handling in the submit handler to dispatch the message
         if (newMessageRec.sender._id !== initialUser.id) {

@@ -1,6 +1,5 @@
 import React from "react";
 import SearchBar from "../pages/search";
-import { IoNotifications } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleShowProfile, userSelector } from "../redux/reducers/userReducer";
 import UserProfile from "./userProfile";
@@ -16,7 +15,6 @@ const NavBar = () => {
           Chat App
         </div>
         <div className="flex items-center justify-between gap-4 m-2">
-          <IoNotifications className="font-bold text-2xl cursor-pointer" />
           <div
             className="user cursor-pointer"
             onClick={() => dispatch(toggleShowProfile(initialUser))}
