@@ -75,7 +75,7 @@ const SignUp = () => {
       );
       if (data.status === 201) {
         clearInput();
-        toast.success("Created Account successflyy!!");
+        toast.success("Check Mail to verify to verify your Email");
       } else if (data.status === 200) {
         toast.error("Account Already Exists!");
         clearInput();

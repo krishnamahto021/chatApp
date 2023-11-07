@@ -25,9 +25,10 @@ const SignIn = () => {
       if (data.status === 200) {
         toast.success("Signed In successfull!! ");
         localStorage.setItem("user", JSON.stringify(data.data.data.user));
-        console.log();
         navigate("/user/chat");
       } else if (data.status === 201) {
+        toast.error("Email not verified ");
+      } else if (data.status === 202) {
         toast.error("Password invalid!!");
       } else {
         toast.error("Email not registered!");

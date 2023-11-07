@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const dotEnv = require("dotenv");
 const { verifyUserEmailMailer } = require("../mailers/verifyUserEmailMailer");
 dotEnv.config();
+const crypto = require("crypto");
 
 module.exports.signUp = async function (req, res) {
   try {
@@ -16,26 +17,51 @@ module.exports.signUp = async function (req, res) {
         name: user.name,
         email: user.email,
         profileImage: user.profileImage,
+        token: user.token,
       });
-      verifyUserEmailMailer(user.email);
+      verifyUserEmailMailer(user);
     } else {
       const newUser = await User.create({
         name,
         email,
         password,
         profileImage,
+        token: crypto.randomBytes(16).toString("hex"),
       });
       // console.log(newUser);
-      verifyUserEmailMailer(newUser.email);
+      verifyUserEmailMailer(newUser);
       res.status(201).json({
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
         profileImage: newUser.profileImage,
+        token: newUser.token,
       });
     }
   } catch (err) {
     console.log(`errror in creating user ${err}`);
+  }
+};
+
+module.exports.verifyUser = async function (req, res) {
+  try {
+    const token = req.params.token;
+    const user = await User.findOne({ token });
+    if (!user) {
+      console.log("not found");
+      return res.status(400).json("Token Not valid");
+    } else {
+      user.isVerified = true;
+      await user.save();
+      return res.status(200).json({
+        message: "Email verified successfully",
+      });
+    }
+  } catch (error) {
+    console.log(`Error in verifying user ${error}`);
+    return res.status(500).json({
+      message: "Internal Server Error !",
+    });
   }
 };
 
@@ -44,9 +70,8 @@ module.exports.signIn = async function (req, res) {
     const { email, password } = req.body;
 
     let user = await User.findOne({ email });
-
     if (user) {
-      if (user.password === password) {
+      if (user.password === password && user.isVerified) {
         // Sign In Success
         console.log("sucess");
         let userWithOutPassword = {
@@ -64,10 +89,15 @@ module.exports.signIn = async function (req, res) {
             user: userWithOutPassword,
           },
         });
+      } else if (!user.isVerified) {
+        console.log("Email not verified");
+        return res.status(201).json({
+          message: "Email not verified",
+        });
       } else {
         // Invalid Password
         console.log("wrong password");
-        return res.status(201).json({
+        return res.status(202).json({
           message: "Invalid Password",
         });
       }

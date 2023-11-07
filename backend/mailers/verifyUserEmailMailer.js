@@ -1,15 +1,18 @@
 const nodemailer = require("../config/nodemailer");
 const ejs = require("ejs");
 const path = require("path");
-module.exports.verifyUserEmailMailer = async (userEmail) => {
+module.exports.verifyUserEmailMailer = async (user) => {
   try {
     let emailHtml = await ejs.renderFile(
-      path.join(__dirname, "../views/verifyUserEmail.ejs")
+      path.join(__dirname, "../views/verifyUserEmail.ejs"),
+      {
+        token: user.token,
+      }
     );
     const options = {
       from: process.env.EMAIL,
-      to: userEmail,
-      subject: "Verify User",
+      to: user.email,
+      subject: `Verify ${user.name}`,
       html: emailHtml,
     };
 

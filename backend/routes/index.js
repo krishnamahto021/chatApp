@@ -6,6 +6,9 @@ const messageController = require("../controllers/messageController");
 const passport = require("passport");
 
 router.post("/sign-up", userController.signUp);
+
+router.get("/verify-user/:token", userController.verifyUser);
+
 router.post("/sign-in", userController.signIn);
 
 // router.get("/log-out", userController.logOut);
