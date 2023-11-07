@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const dotEnv = require("dotenv");
+const { verifyUserEmailMailer } = require("../mailers/verifyUserEmailMailer");
 dotEnv.config();
 
 module.exports.signUp = async function (req, res) {
@@ -16,6 +17,7 @@ module.exports.signUp = async function (req, res) {
         email: user.email,
         profileImage: user.profileImage,
       });
+      verifyUserEmailMailer(user.email);
     } else {
       const newUser = await User.create({
         name,
@@ -24,6 +26,7 @@ module.exports.signUp = async function (req, res) {
         profileImage,
       });
       // console.log(newUser);
+      verifyUserEmailMailer(newUser.email);
       res.status(201).json({
         _id: newUser._id,
         name: newUser.name,

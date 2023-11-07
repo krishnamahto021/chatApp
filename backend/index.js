@@ -6,6 +6,8 @@ const passport = require("passport");
 // const passportLocal = require("./config/passport-local-strategy");
 const passportJWT = require("./config/passport-jwt-strategy");
 const { chatSockets } = require("./config/chatSockets");
+const ejs = require("ejs");
+const path = require("path");
 
 const app = express();
 dotEnv.config();
@@ -17,6 +19,10 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(passport.initialize());
+
+// set up view engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // app.use('/user/sign-up',require('./routes'));
 app.use("/user", require("./routes"));
