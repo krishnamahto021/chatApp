@@ -4,6 +4,7 @@ const dotEnv = require("dotenv");
 const { verifyUserEmailMailer } = require("../mailers/verifyUserEmailMailer");
 dotEnv.config();
 const crypto = require("crypto");
+const { resetPasswordEmail } = require("../mailers/resetPasswordMailer");
 
 module.exports.signUp = async function (req, res) {
   try {
@@ -112,6 +113,61 @@ module.exports.signIn = async function (req, res) {
     console.log(`error in signing in the user from the JWT ${err}`);
     return res.status(500).json({
       message: "Internal Server Error!!",
+    });
+  }
+};
+
+module.exports.forgottenPassword = async function (req, res) {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(202).json({
+        message: "User not registered",
+      });
+    } else if (user && user.isVerified) {
+      resetPasswordEmail(user);
+      return res.status(200).json({
+        message: "Reset Password Link Sent",
+      });
+    } else if (!user.isVerified) {
+      return res.status(201).json({
+        message: "Please verify your Email",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal Serever Error",
+    });
+  }
+};
+
+module.exports.resetPassword = async function (req, res) {
+  try {
+    const { email, password } = req.body;
+    const token = req.params.token;
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(201).json({
+        message: "Token not Valid",
+      });
+    } else {
+      if (user.email === email) {
+        user.password = password;
+        await user.save();
+        return res.status(200).json({
+          message: "Password updated successfully",
+        });
+      } else {
+        return res.status(202).json({
+          message: "Email Not registered",
+        });
+      }
+    }
+  } catch (error) {
+    console.log(`Error in reseting password ${error}`);
+    return res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };

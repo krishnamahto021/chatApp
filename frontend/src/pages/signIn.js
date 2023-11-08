@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassowrd] = useState("");
@@ -81,6 +81,7 @@ const SignIn = () => {
           <button className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md text-xl  transition-all block m-auto p-4 mt-3">
             Log In
           </button>
+          <Link to={"/user/forgotten-password"}>Forgotten Password ? </Link>
         </form>
       </div>
     </>

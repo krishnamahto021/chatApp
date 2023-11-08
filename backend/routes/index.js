@@ -11,6 +11,10 @@ router.get("/verify-user/:token", userController.verifyUser);
 
 router.post("/sign-in", userController.signIn);
 
+router.post("/forgotten-password", userController.forgottenPassword); // sending mail to the registered user
+
+router.post("/reset-password/:token", userController.resetPassword); // to update the password of the registered user
+
 // router.get("/log-out", userController.logOut);
 router.get("/search-user", userController.searchUser);
 router.post(

@@ -4,6 +4,8 @@ import ChatPage from "./pages/chatPage";
 import VerifyUserPage from "./pages/verifyUserPage";
 import { useSelector } from "react-redux"; // Import useSelector for Redux
 import { userSelector } from "./redux/reducers/userReducer";
+import ResetPasswordPage from "./pages/resetPasswordPage";
+import ForgottenPasswordPage from "./pages/forgottenPasswordPage";
 
 export const ProtectedRouteChat = ({ element }) => {
   const { initialUser } = useSelector(userSelector);
@@ -20,6 +22,14 @@ export const router = createBrowserRouter([
   {
     path: "/user/verify-user/:token",
     element: <VerifyUserPage />,
+  },
+  {
+    path: "/user/forgotten-password",
+    element: <ForgottenPasswordPage />,
+  },
+  {
+    path: "/user/reset-password/:token",
+    element: <ResetPasswordPage />,
   },
   {
     path: "/user/chat",
