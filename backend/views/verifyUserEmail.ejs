@@ -3,9 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Verify</title>
+    <title>Document</title>
   </head>
   <body>
-    <a href="http://localhost:3000/user/verify-user/<%=token%>">Click me</a>
+    <div style="display: flex; justify-content:space-evenly;">
+    <table
+      style="
+        width: 400px;
+        height: 200px;
+        border: 2px solid #8a5cf672;
+        border-radius: 10px;
+        background-color: #a457c9;
+      "
+    >
+      <th style="color: black">Verify Your Email</th>
+      <tr>
+        <td style="text-align: center">
+          <a
+          href="http://localhost:3000/user/verify-user/<%=token%>"
+            style="
+              background-color: #8b5cf6;
+              text-decoration: none;
+              color: white;
+              padding: 8px;
+              border-radius: 10px;
+              width: 200px;
+              display: inline-block;
+              font-size: larger;
+            "
+          >
+            Reset Password
+          </a>
+        </td>
+      </tr>
+    </table>
+    </div>
+
   </body>
 </html>

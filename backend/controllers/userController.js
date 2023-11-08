@@ -20,7 +20,6 @@ module.exports.signUp = async function (req, res) {
         profileImage: user.profileImage,
         token: user.token,
       });
-      verifyUserEmailMailer(user);
     } else {
       const newUser = await User.create({
         name,
