@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const dotEnv = require("dotenv");
+const bcrypt = require("bcrypt");
 const { verifyUserEmailMailer } = require("../mailers/verifyUserEmailMailer");
 dotEnv.config();
 const crypto = require("crypto");
@@ -9,7 +10,6 @@ const { resetPasswordEmail } = require("../mailers/resetPasswordMailer");
 module.exports.signUp = async function (req, res) {
   try {
     const { name, email, password, profileImage } = req.body;
-
     const user = await User.findOne({ email });
     if (user) {
       console.log("user already exists");
@@ -72,7 +72,8 @@ module.exports.signIn = async function (req, res) {
 
     let user = await User.findOne({ email });
     if (user) {
-      if (user.password === password && user.isVerified) {
+      const isPasswordMatch = bcrypt.compare(password, user.password);
+      if (isPasswordMatch && user.isVerified) {
         // Sign In Success
         console.log("sucess");
         let userWithOutPassword = {

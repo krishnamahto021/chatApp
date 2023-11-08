@@ -10,7 +10,9 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassowrd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+  );
   const [loading, setLoading] = useState(false);
 
   const postDetails = (pic) => {
@@ -35,7 +37,6 @@ const SignUp = () => {
           setProfileImage(imageUrl);
           console.log(imageUrl);
           setLoading(false);
-          console.log("ji");
           toast.success(`Image uploaded Successfully!`);
         } catch (error) {
           // console.error(error);
@@ -60,7 +61,6 @@ const SignUp = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          
         },
       };
       const data = await axios.post(
