@@ -33,14 +33,25 @@ const ForgottenPasswordPage = () => {
     }
   }
   return (
-    <div>
-      <form onSubmit={submitHandler}>
+    <div className=" shadow-2xl w-1/3 bg-[#a457c9] block m-auto  rounded-md p-4 text-lg font-semibold mt-52">
+      <form
+        onSubmit={submitHandler}
+        className="flex flex-col gap-3 content-evenly "
+      >
+        <label>Email</label>
         <input
           placeholder="Enter your Registered Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="p-2 rounded "
+          required
         ></input>
-        <button type="submit">Send Reset Link</button>
+        <button
+          type="submit"
+          className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md text-xl  transition-all block m-auto p-4 mt-3"
+        >
+          Send Reset Link
+        </button>
       </form>
     </div>
   );
