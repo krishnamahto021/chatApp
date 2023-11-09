@@ -15,6 +15,16 @@ router.post("/forgotten-password", userController.forgottenPassword); // sending
 
 router.post("/reset-password/:token", userController.resetPassword); // to update the password of the registered user
 
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),userController.googleSignUp
+);
+
 // router.get("/log-out", userController.logOut);
 router.get("/search-user", userController.searchUser);
 router.post(

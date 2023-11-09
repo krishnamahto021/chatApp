@@ -55,6 +55,7 @@ const SignUp = () => {
     document.getElementById("profilePic").value = ""; // we can't clear the ip feilds for the file directly
     setName("");
   };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -85,6 +86,7 @@ const SignUp = () => {
       toast.error("Internal Server Error!");
     }
   };
+
   return (
     <>
       <div className="signUpContainer shadow-2xl w-1/3 bg-[#a457c9] block m-auto  rounded-md p-4">
@@ -151,6 +153,11 @@ const SignUp = () => {
             </button>
           )}
         </form>
+        <div>
+          <a href="http://localhost:5000/user/auth/google">
+            Sign up using google
+          </a>
+        </div>
       </div>
     </>
   );

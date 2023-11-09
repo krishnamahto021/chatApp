@@ -24,6 +24,7 @@ const SignIn = () => {
 
       if (data.status === 200) {
         toast.success("Signed In successfull!! ");
+        console.log(data.data.data.user);
         localStorage.setItem("user", JSON.stringify(data.data.data.user));
         navigate("/user/chat");
       } else if (data.status === 201) {

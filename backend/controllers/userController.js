@@ -199,3 +199,18 @@ module.exports.logOut = function (req, res) {
     res.status(400).json({ message: "Token not provided" });
   }
 };
+
+module.exports.googleSignUp = function (req, res) {
+  const { _id, name, email, profileImage ,token} = req.user;
+  const userData = {
+    id:_id,
+    name,
+    email,
+    profileImage,
+    token
+  };
+  const queryParams = new URLSearchParams(userData).toString();
+
+  // Redirect to the frontend route with query parameters
+  res.redirect(`http://localhost:3000/user/auth/googleCallback?${queryParams}`);
+};

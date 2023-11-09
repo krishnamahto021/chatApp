@@ -15,6 +15,7 @@
   "dependencies": {
     "@react-email/render": "^0.0.9",
     "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
@@ -26,6 +27,7 @@
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",

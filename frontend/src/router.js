@@ -6,6 +6,7 @@ import { useSelector } from "react-redux"; // Import useSelector for Redux
 import { userSelector } from "./redux/reducers/userReducer";
 import ResetPasswordPage from "./pages/resetPasswordPage";
 import ForgottenPasswordPage from "./pages/forgottenPasswordPage";
+import GoogleCallback from "./pages/googleCallback";
 
 export const ProtectedRouteChat = ({ element }) => {
   const { initialUser } = useSelector(userSelector);
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
   {
     path: "/user/verify-user/:token",
     element: <VerifyUserPage />,
+  },
+  {
+    path: "/user/auth/googleCallback",
+    element: <GoogleCallback />,
   },
   {
     path: "/user/forgotten-password",
