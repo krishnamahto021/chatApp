@@ -201,13 +201,16 @@ module.exports.logOut = function (req, res) {
 };
 
 module.exports.googleSignUp = function (req, res) {
-  const { _id, name, email, profileImage ,token} = req.user;
+  const { _id, name, email, profileImage } = req.user;
+  const token = jwt.sign(req.user.toJSON(), process.env.JWT_SECRET_KEY, {
+    expiresIn: "30d",
+  });
   const userData = {
-    id:_id,
+    id: _id,
     name,
     email,
     profileImage,
-    token
+    token,
   };
   const queryParams = new URLSearchParams(userData).toString();
 

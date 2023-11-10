@@ -31,8 +31,6 @@ const SearchBar = () => {
     }
   };
 
- 
-
   return (
     <>
       <div
@@ -74,8 +72,8 @@ const SearchBar = () => {
           {searchedUsers.length > 0 ? (
             searchedUsers.map((searchedUser) => {
               return (
-                <div key={searchedUser.id}>
-                  <UserView searchedUser={searchedUser} />
+                <div>
+                  <UserView searchedUser={searchedUser} key={searchedUser.id} />
                 </div>
               );
             })

@@ -17,6 +17,7 @@ const UserView = (props) => {
         },
       };
       const { data } = await axios.post("/user/chat", { userId }, config);
+      console.log(data);
       dispatch(setChats(data));
     } catch (error) {
       toast.error("Internal Serever Error!");
