@@ -16,7 +16,7 @@ const UserMessage = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <div className="userMessage m-3 p-3 bg-gray-300 w-full rounded-md">
+      <div className="userMessage m-3 pr-2 bg-gray-300 rounded-md w-screen h-[85vh] sm:w-[50vw] md:w-[53vw] lg:w-[60vw] xl:w-[70vw] ">
         <div className="messageContainer">
           {selectedChat.chatName ? (
             <div>

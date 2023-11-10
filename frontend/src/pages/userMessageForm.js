@@ -78,7 +78,7 @@ const UserMessageForm = () => {
       socket.emit("joinChat", selectedChat._id);
     } catch (error) {
       console.log(`Error in fetching chat ${error}`);
-      toast.error(`Error in fetching chats`);
+      // toast.error(`Error in fetching chats`);
     }
   };
 
@@ -135,20 +135,20 @@ const UserMessageForm = () => {
           />
         </div>
       ) : null}
-      <div className="inputContainer  gap-9 flex  content-stretch ">
+      <div className="inputContainer ml-1 ">
         <form
-          className="flex items-center content-between gap-32"
+          className="flex gap-16"
           onSubmit={submitHandler}
         >
           <input
             placeholder="Type your message ... "
-            className="inputFeild  rounded-xl p-2 w-[55rem] focus:border-transparent focus:outline-none"
+            className="inputFeild  rounded-xl p-2  focus:border-transparent focus:outline-none w-[60vw]"
             value={message}
             onChange={typingHandler}
             required
           ></input>
           <button
-            className="sendButton bg-violet-500 hover:bg-violet-600 text-white rounded-lg p-2 "
+            className="sendButton bg-violet-500 hover:bg-violet-600 text-white rounded-lg p-2 text-lg "
             onClick={submitHandler}
           >
             Send

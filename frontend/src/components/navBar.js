@@ -9,7 +9,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <div className="navBar flex items-center justify-between flex-wrap ">
+      <div className="navBar max-w-full flex items-center justify-between flex-wrap ">
         <SearchBar />
         <div className="tracking-widest font-semibold text-lg -ml-2">
           Chat App

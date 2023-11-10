@@ -62,16 +62,16 @@ const UserContainer = () => {
 
   return (
     <>
-      <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh]">
+      <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh] w-[28vw] hidden md:block md:w-[40vw] lg:w-[30vw] xl:w-[25vw]  ">
         <div>
           <button
-            className="p-3 ml-56 bg-violet-500 hover:bg-violet-600 rounded-xl text-white"
+            className="p-3 ml-auto bg-violet-500 hover:bg-violet-600 rounded-xl text-white "
             onClick={toggleGroupChatFormFucntion}
           >
             Create Group Chat
           </button>
         </div>
-        <div className="usersContainer w-[385px] pl-1">
+        <div className="usersContainer  pl-1 w-[90%] ">
           {chats.length > 0 ? (
             chats.map((c, index) => {
               const user = getName(c);
