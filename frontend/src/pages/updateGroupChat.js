@@ -4,6 +4,7 @@ import {
   addUserToGroup,
   removeUserFromGroupChat,
   userSelector,
+  toggleShowProfile,
 } from "../redux/reducers/userReducer";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -116,8 +117,17 @@ const UpdateGroupChat = () => {
   };
   return (
     <>
-      <div className="modalWrapper fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.7)]"></div>
-      <div className="form-container flex flex-col content-evenly fixed top-[15%] left-[35%] bg-gray-300 p-4 rounded-md shadow-2xl">
+      <div
+        className="modalWrapper fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.7)] "
+        onClick={() => dispatch(toggleShowProfile())}
+      ></div>
+      <div className="form-container w-[80%] flex flex-col content-evenly fixed top-[15%] left-[10%] bg-gray-300 p-4 rounded-md shadow-2xl sm:left-[10%]">
+        <span
+          onClick={() => dispatch(toggleShowProfile())}
+          className="absolute top-3 right-3 cursor-pointer text-lg font-bold"
+        >
+          X
+        </span>
         <label>Name of Group Chat</label>
         <input
           className="p-2 m-2 rounded-md bg-gray-50 focus:border-transparent focus:outline-none"
@@ -148,7 +158,7 @@ const UpdateGroupChat = () => {
           <p>NO users..</p>
         )}
 
-        <div className="selectedChatUsers flex border-blue-200">
+        <div className="selectedChatUsers grid grid-cols-2 border-blue-200  sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {selectedChat.users ? (
             selectedChat.users.map((user) => {
               return (
@@ -170,14 +180,14 @@ const UpdateGroupChat = () => {
 
         <div className="buttonContainer flex">
           <button
-            className="p-3 ml-56 bg-red-500 hover:bg-red-600 rounded-xl text-white"
+            className="p-3 ml-5 bg-red-500 hover:bg-red-600 rounded-xl text-white"
             type="submit"
             onClick={() => handleDelete(selectedChat._id, initialUser.id)}
           >
             Leave Group
           </button>
           <button
-            className="p-3 ml-56 bg-violet-500 hover:bg-violet-600 rounded-xl text-white"
+            className="p-3 ml-5 bg-violet-500 hover:bg-violet-600 rounded-xl text-white"
             type="submit"
             onClick={handleSubmit}
           >

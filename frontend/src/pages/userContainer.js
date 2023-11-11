@@ -62,7 +62,7 @@ const UserContainer = () => {
 
   return (
     <>
-      <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh] w-[28vw] hidden md:block md:w-[40vw] lg:w-[30vw] xl:w-[25vw]  ">
+      <aside className="bg-gray-300 rounded-md p-2 m-3 h-[85vh] w-[28vw] hidden md:block md:w-[40vw] lg:w-[30vw] xl:w-[25vw] overflow-y-scroll ">
         <div>
           <button
             className="p-3 ml-auto bg-violet-500 hover:bg-violet-600 rounded-xl text-white "

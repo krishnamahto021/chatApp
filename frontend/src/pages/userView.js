@@ -17,7 +17,6 @@ const UserView = (props) => {
         },
       };
       const { data } = await axios.post("/user/chat", { userId }, config);
-      console.log(data);
       dispatch(setChats(data));
     } catch (error) {
       toast.error("Internal Serever Error!");
@@ -28,14 +27,14 @@ const UserView = (props) => {
   return (
     <>
       <div
-        className="container flex gap-2 m-1  border-b border-gray-400 hover:bg-gray-400 cursor-pointer "
+        className="container flex gap-2 m-1 items-center border-b border-gray-400 hover:bg-gray-400 cursor-pointer "
         onClick={() => createChat(searchedUser._id)}
       >
-        <div className="imageContainer m-1 p-2" onClick={handleFunction}>
+        <div className="imageContainer p-2" onClick={handleFunction}>
           <img
             src={searchedUser?.profileImage}
             alt={searchedUser?.name}
-            className="image w-14 h-w-14 rounded-full "
+            className="image rounded-full w-[56px] h-[56px]"
           ></img>
         </div>
         <div

@@ -3,9 +3,10 @@ import SearchBar from "../pages/search";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleShowProfile, userSelector } from "../redux/reducers/userReducer";
 import UserProfile from "./userProfile";
+import UpdateGroupChat from "../pages/updateGroupChat";
 
 const NavBar = () => {
-  const { initialUser, showProfile } = useSelector(userSelector);
+  const { initialUser, showProfile, selectedChat } = useSelector(userSelector);
   const dispatch = useDispatch();
   return (
     <>

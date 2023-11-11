@@ -123,6 +123,6 @@ export const {
   removeUserFromGroupChat,
   addUserToGroup,
   setMessageArray,
-  setNotifications
+  setNotifications,
 } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;
