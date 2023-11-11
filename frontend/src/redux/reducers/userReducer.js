@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 const initialState = {
   initialUser: {},
   showProfile: false,
+  showSideBar: false,
   showUserProfile: {},
   searchedUsers: [],
   selectedChat: {},
@@ -28,6 +29,12 @@ const userSlice = createSlice({
       return {
         ...initialState,
         initialUser: {},
+      };
+    },
+    toggleShowSideBar: (state, action) => {
+      return {
+        ...state,
+        showSideBar: !state.showSideBar,
       };
     },
 
@@ -124,5 +131,6 @@ export const {
   addUserToGroup,
   setMessageArray,
   setNotifications,
+  toggleShowSideBar,
 } = userSlice.actions;
 export const userSelector = (state) => state.userReducer;
