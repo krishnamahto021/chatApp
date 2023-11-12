@@ -91,7 +91,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="signUpContainer shadow-2xl w-1/3 bg-[#a457c9] block m-auto  rounded-md p-4">
+      <div className="signUpContainer shadow-2xl w-3/4 bg-[#a457c9] block m-auto  rounded-md p-4 md:w-2/3 lg:w-1/3 ">
         <form
           className="flex flex-col gap-2 p-2 text-lg font-semibold "
           onSubmit={submitHandler}
@@ -129,9 +129,9 @@ const SignUp = () => {
               }}
             >
               {!showPassword ? (
-                <AiFillEye className="inline  -m-12 text-xl" />
+                <AiFillEye className="inline  -m-8 text-xl md:-m-10" />
               ) : (
-                <AiFillEyeInvisible className="inline  -m-12 text-xl" />
+                <AiFillEyeInvisible className="inline  -m-8 text-xl md:-m-10" />
               )}
             </span>
           </div>
@@ -148,7 +148,7 @@ const SignUp = () => {
             <ProgressBar />
           ) : (
             <button
-              className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md text-xl  transition-all block m-auto p-4 mt-3"
+              className="bg-violet-500 hover:bg-violet-600  w-fit rounded-md text-xl  transition-all block m-auto p-4 mt-3 md:w-72"
               type="submit"
             >
               Create your account
@@ -156,12 +156,12 @@ const SignUp = () => {
           )}
         </form>
         <hr></hr>
-        <div className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold">
+        <div className="bg-violet-500 hover:bg-violet-600  w-fit rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold md:w-72">
           <Link
             to={"http://localhost:5000/user/auth/google"}
             className="flex justify-evenly items-center"
           >
-            <span className="ml-2 ">Sign Up or Sign in</span>
+            <span className="ml-2 font-semibold">Sign Up or Sign in</span>
             <FcGoogle className="text-4xl" />
           </Link>
         </div>

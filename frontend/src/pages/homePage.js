@@ -22,7 +22,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="container flex flex-col items-center justify-evenly mt-10 p-3">
+      <div className="container flex flex-col items-center  justify-evenly mt-4 p-3 w-screen md:mt-10">
         <span className="text-lg font-semibold">
           Connect, Communicate, and Flourish Together!
         </span>

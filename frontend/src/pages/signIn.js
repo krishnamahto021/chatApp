@@ -43,7 +43,7 @@ const SignIn = () => {
 
   return (
     <>
-      <div className="signInContainer shadow-2xl w-1/3 bg-[#a457c9] block m-auto  rounded-md p-4">
+      <div className="signInContainer shadow-2xl w-3/4 bg-[#a457c9] block m-auto  rounded-md p-4 md:w-2/3 lg:w-1/3 ">
         <form
           className="flex flex-col gap-2 p-2 text-lg font-semibold "
           onSubmit={submitHandler}
@@ -73,20 +73,20 @@ const SignIn = () => {
               }}
             >
               {!showPassword ? (
-                <AiFillEye className="inline  -m-12 text-xl" />
+                <AiFillEye className="inline  -m-8 text-xl md:-m-10" />
               ) : (
-                <AiFillEyeInvisible className="inline  -m-12 text-xl" />
+                <AiFillEyeInvisible className="inline  -m-8 text-xl md:-m-10" />
               )}
             </span>
           </div>
 
-          <button className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md text-xl  transition-all block m-auto p-4 mt-3">
+          <button className="bg-violet-500 hover:bg-violet-600  w-52 rounded-md text-xl  transition-all block m-auto p-4 mt-3 md:w-72">
             Log In
           </button>
-          <Link to={"/user/forgotten-password"}>Forgotten Password ? </Link>
+          <Link to={"/user/forgotten-password"} className='text-gray-800 hover:text-gray-900'>Forgotten Password ? </Link>
         </form>
         <hr></hr>
-        <div className="bg-violet-500 hover:bg-violet-600  w-80 rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold">
+        <div className="bg-violet-500 hover:bg-violet-600  w-fit rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold md:w-72">
           <Link
             to={"http://localhost:5000/user/auth/google"}
             className="flex justify-evenly items-center"
