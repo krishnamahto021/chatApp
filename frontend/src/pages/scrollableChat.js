@@ -17,7 +17,7 @@ const ScrollableChat = () => {
   };
 
   return (
-    <ScrollableFeed className="h-[68vh] pb-5">
+    <ScrollableFeed className="h-[68vh] pb-5 scrollbar-thin">
       {messageArray.map((message, index) => (
         <div
           key={index}

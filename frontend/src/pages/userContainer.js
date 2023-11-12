@@ -75,7 +75,7 @@ const UserContainer = () => {
         <aside
           className={`bg-gray-300 rounded-md p-2 m-3 h-[85vh] w-[80vw]  ${
             showSideBar ? "w-screen" : "hidden"
-          } md:block md:w-[40vw] lg:w-[30vw] xl:w-[25vw] overflow-y-scroll`}
+          } md:block md:w-[40vw] lg:w-[30vw] xl:w-[25vw] overflow-y-scroll scrollbar-thin`}
         >
           <div>
             <button

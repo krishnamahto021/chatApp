@@ -136,17 +136,14 @@ const UserMessageForm = () => {
         </div>
       ) : null}
       <div className="inputContainer ml-1 ">
-        <form
-          className="flex gap-16"
-          onSubmit={submitHandler}
-        >
-          <input
+        <form className="flex gap-8 sm:gap-14" onSubmit={submitHandler}>
+          <textarea
             placeholder="Type your message ... "
-            className="inputFeild  rounded-xl p-2  focus:border-transparent focus:outline-none w-[60vw]"
+            className="inputFeild  rounded-xl p-1 pb-2 focus:border-transparent focus:outline-none resize-none w-[60vw] h-10 sm:h-12  sm:p-2 scrollbar-thin"
             value={message}
             onChange={typingHandler}
             required
-          ></input>
+          ></textarea>
           <button
             className="sendButton bg-violet-500 hover:bg-violet-600 text-white rounded-lg p-2 text-lg "
             onClick={submitHandler}
