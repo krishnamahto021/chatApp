@@ -25,9 +25,11 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/user/auth/google/callback",
+      callbackURL:
+        "https://chatapp-inyr.onrender.com/user/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
       try {
         // Find or create a user based on the Google profile
         const user = await User.findOne({

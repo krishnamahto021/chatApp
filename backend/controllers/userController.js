@@ -215,5 +215,7 @@ module.exports.googleSignUp = function (req, res) {
   const queryParams = new URLSearchParams(userData).toString();
 
   // Redirect to the frontend route with query parameters
-  res.redirect(`http://localhost:3000/user/auth/googleCallback?${queryParams}`);
+  res.redirect(
+    `https://chatapp-inyr.onrender.com/user/auth/googleCallback?${queryParams}`
+  );
 };

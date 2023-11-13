@@ -17,25 +17,27 @@ const ScrollableChat = () => {
   };
 
   return (
-    <ScrollableFeed className="h-[68vh] pb-5 scrollbar-thin">
-      {messageArray.map((message, index) => (
-        <div
-          key={index}
-          className={`singleMessage max-w-md ml-2 p-2 rounded-md mb-2 w-fit  ${
-            isCurrentUser(message) ? "bg-cyan-500 " : "bg-blue-400 ml-auto "
-          }`}
-        >
-          {message.content}
+    <div className="h-[68vh] ">
+      <ScrollableFeed className="pb-5 scrollbar-thin">
+        {messageArray.map((message, index) => (
+          <div
+            key={index}
+            className={`singleMessage max-w-md ml-2 p-2 rounded-md mb-2 w-fit  ${
+              isCurrentUser(message) ? "bg-cyan-500 " : "bg-blue-400 ml-auto "
+            }`}
+          >
+            {message.content}
 
-          {/* Display sender/receiver only if it's the last message */}
-          {isLastMessage(index) && (
-            <div className="text-xs text-gray-500 mt-1">
-              {isCurrentUser(message) ? "You" : message.sender.name}
-            </div>
-          )}
-        </div>
-      ))}
-    </ScrollableFeed>
+            {/* Display sender/receiver only if it's the last message */}
+            {isLastMessage(index) && (
+              <div className="text-xs text-gray-500 mt-1">
+                {isCurrentUser(message) ? "You" : message.sender.name}
+              </div>
+            )}
+          </div>
+        ))}
+      </ScrollableFeed>
+    </div>
   );
 };
 

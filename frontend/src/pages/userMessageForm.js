@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 import Lottie from "lottie-react";
 import animationData from "../animation/Animation - 1699174380745.json";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://chatapp-inyr.onrender.com/";
 var socket, selectedChatCompare;
 
 const UserMessageForm = () => {

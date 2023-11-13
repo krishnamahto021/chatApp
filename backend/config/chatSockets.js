@@ -2,7 +2,7 @@ module.exports.chatSockets = function (socketServer) {
   let io = require("socket.io")(socketServer, {
     pingTimeOut: 60000,
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://chatapp-inyr.onrender.com/",
     },
   });
   io.sockets.on("connection", function (socket) {
