@@ -158,7 +158,7 @@ const SignUp = () => {
         <hr></hr>
         <div className="bg-violet-500 hover:bg-violet-600  w-fit rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold md:w-72">
           <Link
-            to={"http://localhost:5000/user/auth/google"}
+            to={"https://chatapp-inyr.onrender.com/user/auth/google"}
             className="flex justify-evenly items-center"
           >
             <span className="ml-2 font-semibold">Sign Up or Sign in</span>
