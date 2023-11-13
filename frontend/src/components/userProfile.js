@@ -21,7 +21,7 @@ const UserProfile = () => {
           document.querySelector(".modalContainer")
         )
       ) : (
-        <div className="profile-info absolute w-[500px] h-[500px] bg-slate-100 m-5 p-3 rounded-md  flex flex-col items-center justify-center transition duration-1000 ease-in-out -top-4 -right-4">
+        <div className="profile-info absolute  bg-slate-100 m-5 p-3 rounded-md  flex flex-col items-center justify-center transition duration-1000 ease-in-out -top-4 -right-4">
           <span
             className="absolute top-3 right-3 cursor-pointer text-lg font-bold"
             onClick={() => dispatch(toggleShowProfile())}
@@ -29,11 +29,13 @@ const UserProfile = () => {
             X
           </span>
           <span className="text-center text-2xl">{showUserProfile.name}</span>
-          <img
-            src={showUserProfile.profileImage}
-            alt={showUserProfile.name}
-            className="w-[350px] h-[350px] rounded-full m-1"
-          ></img>
+          <div className="w-1/2 h-1/2 p-2">
+            <img
+              src={showUserProfile.profileImage}
+              alt={showUserProfile.name}
+              className="rounded-full m-1  "
+            ></img>
+          </div>
           <span>Email: {showUserProfile.email}</span>
 
           {initialUser._id === showUserProfile._id ? (

@@ -83,12 +83,17 @@ const SignIn = () => {
           <button className="bg-violet-500 hover:bg-violet-600  w-52 rounded-md text-xl  transition-all block m-auto p-4 mt-3 md:w-72">
             Log In
           </button>
-          <Link to={"/user/forgotten-password"} className='text-gray-800 hover:text-gray-900'>Forgotten Password ? </Link>
+          <Link
+            to={"/user/forgotten-password"}
+            className="text-gray-800 hover:text-gray-900"
+          >
+            Forgotten Password ?{" "}
+          </Link>
         </form>
         <hr></hr>
         <div className="bg-violet-500 hover:bg-violet-600  w-fit rounded-md   transition-all block m-auto p-3 mt-3 text-lg font-semibold md:w-72">
           <Link
-            to={"http://https://chatapp-inyr.onrender.com/user/auth/google"}
+            to={"https://chatapp-inyr.onrender.com/user/auth/google"}
             className="flex justify-evenly items-center"
           >
             <span className="ml-2 ">Sign Up or Sign in</span>

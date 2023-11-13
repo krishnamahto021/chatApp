@@ -63,7 +63,7 @@ const CreateGroupChatFrom = (props) => {
           Authorization: `Bearer ${initialUser.token}`,
         },
       };
-      const { data } = await axios.post(
+      const data = await axios.post(
         "/user/create-group-chat",
         {
           name: groupName,
@@ -71,8 +71,12 @@ const CreateGroupChatFrom = (props) => {
         },
         config
       );
-      dispatch(setChats(data));
-      toast.success("Group Chat Created Successfully!");
+      if (data.status === 200) {
+        dispatch(setChats(data.data));
+        toast.success("Group Chat Created Successfully!");
+      } else if (data.status === 201) {
+        toast.error("Select two or more  users!");
+      }
       toggleGroupChatFormFucntion();
     } catch (error) {
       console.log(`Error in creating group Chat ${error}`);

@@ -82,7 +82,7 @@ module.exports.fetchChat = async function (req, res) {
 module.exports.createGroupChat = async function (req, res) {
   var users = JSON.parse(req.body.users);
   if (users.length < 2) {
-    return res.status(400).send("Need more than 2 memebers to create group");
+    return res.status(201).send("Need more than 2 memebers to create group");
   }
   users.push(req.user);
   console.log("group chat");

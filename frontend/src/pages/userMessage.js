@@ -23,9 +23,9 @@ const UserMessage = () => {
   return (
     <>
       <div
-        className={`userMessage m-3 pr-2 bg-gray-300 rounded-md w-screen h-[85vh] md:w-[53vw] lg:w-[60vw] xl:w-[70vw] ${
-          showSideBar ? "hidden" : ""
-        }`}
+        className={`userMessage m-3 pr-2 bg-gray-300 rounded-md ${
+          showSideBar ? "w-screen" : "hidden"
+        } h-[85vh] md:w-[53vw] lg:w-[60vw] xl:w-[70vw] lg:block`}
       >
         <div className="messageContainer">
           {selectedChat.chatName ? (
